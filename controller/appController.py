@@ -19,42 +19,41 @@ class AppController:
         self.currID = 999  # A random ticket ID. This points to the ticket we are currently viewing.
 
     def run(self):
-        while True:
-            self.showMainMenu()
+        self.showWelcomeMenu()
+        return 0
 
     def getInput(self):
         self.input = input()
-        return self.input
 
     def showMainMenu(self):
         while True:
             self.view.printMenu()
-
-            if self.getInput() == '1':
+            self.getInput()
+            if self.input == '1':
                 self.showAllTickets()
-
-            elif self.getInput() == '2':
-                a = self.showOneTicket()
-                return a
-            elif self.getInput() == 'q':
+            elif self.input == '2':
+                self.showOneTicket()
+            elif self.input == 'q':
                 print("Quit")
                 self.view.quit()
             else:
+                # print("Hi!")
                 self.view.inputError()
-                return 0
             self.input = ""
 
     def showWelcomeMenu(self):
         self.view.startMessage()
+        self.getInput()
         while True:
-            # self.getInput()
-            if self.getInput() == "menu":
+            if self.input == "menu":
                 self.showMainMenu()
-            elif self.getInput() == "q":
+            elif self.input == "q":
                 self.view.quit()
             else:
                 self.view.inputError()
             self.input = ""
+            self.getInput()
+
 
     def showAllTickets(self):
         try:
@@ -64,30 +63,32 @@ class AppController:
             return None
         page = self.view.displayTickets(tickets, 1)
         while True:
-
-            if self.getInput() == 'q':
+            self.getInput()
+            if self.input == 'q':
                 self.view.quit()
                 break
 
-            if self.getInput() == "menu":
+            elif self.input == "menu":
                 self.view.printMenu()
                 break
 
-            if self.getInput() == "d":
+            elif self.input == "d":
                 page += 1
                 page = self.view.displayTickets(tickets, page)
 
-            if self.getInput() == "u":
+            elif self.input == "u":
                 page -= 1
                 page = self.view.displayTickets(tickets, page)
             else:
+
                 self.view.inputError()
             self.input = ""
         return 0
 
     def showOneTicket(self):
         self.view.getTicketID()
-        id = self.getInput()
+        self.getInput()
+        id = self.input
         self.input = ""
         try:
             ticket = self.api.getTicketByID(id)
