@@ -19,7 +19,6 @@ class TicketViewerTester(unittest.TestCase):
     def test_api(self):
         # mocking api interaction
         api = APIRequestHandler()
-        pass
 
     # Testing basic functionality of view
     def test_happy_path(self):
@@ -35,18 +34,12 @@ class TicketViewerTester(unittest.TestCase):
         self.assertEqual(view.displaySingleTicket(j2), 0)
         self.assertEqual(view.displayTickets(j1, 1), 1)
 
-        pass
-
-        # few happy path tests
-
     @patch("builtins.input", return_value='q')  # q : quit
     def test_user_quit(self, input):
         controller = AppController()
         with self.assertRaises(SystemExit) as cm:
             controller.showMainMenu()
         self.assertEqual(cm.exception.code, 0)
-
-        pass
 
     @patch("builtins.input", side_effect=['1', 'q'])
     # ['1', 'q', '5']: Show all tickets (1) through menu then quit (q).
@@ -55,8 +48,6 @@ class TicketViewerTester(unittest.TestCase):
         with self.assertRaises(SystemExit) as cm:
             controller.showMainMenu()
         self.assertEqual(cm.exception.code, 0)
-
-        pass
 
     @patch("builtins.input", side_effect=['2', '3', '4'])  # shows ticket with ID 2, 3, 4
     def test_show_one(self, input):
@@ -67,8 +58,6 @@ class TicketViewerTester(unittest.TestCase):
         self.assertEqual(controller.currID, 3)
         self.assertEqual(controller.showOneTicket(), 0)
         self.assertEqual(controller.currID, 4)
-
-        pass
 
 
 if __name__ == "__main__":
