@@ -47,9 +47,8 @@ class AppView:
 
     def displayTickets(self, ticketsJSON, pageNo):
         ticketsArr = ticketsJSON["tickets"]
-        # print(ticketsArr[0])
+        # print(ticketsArr)
         totalPages = math.ceil(float(len(ticketsArr)) / float(self.page_limit))
-        print("total tickets= ", len(ticketsArr))
 
         # circular rotation of pages after limit or before start
         if (pageNo > totalPages):
