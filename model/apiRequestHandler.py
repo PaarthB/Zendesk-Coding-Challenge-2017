@@ -14,18 +14,29 @@ class APIRequestHandler:
         self.data = {}
 
     def getAllTickets(self):
-        multiple = True
         ticketsJSON = self.connectToAPI(True, "")
-        # print(ticketsJSON)
-        ticketsJSON = self.formatJSON(ticketsJSON, False)
-        return ticketsJSON
+        if "tickets" in ticketsJSON:
+            for i in range(len(ticketsJSON)):
+                updated, created = self.formatDates(ticketsJSON["tickets"][i]["updated_at"],
+                                                    ticketsJSON["tickets"][i]["created_at"])
+                ticketsJSON["tickets"][i]["updated_at"] = str(updated)
+                ticketsJSON["tickets"][i]["created_at"] = str(created)
+
+            return ticketsJSON
+        else:
+            return 0
 
     def getTicketByID(self, ticketID):
         print("Fetching ticket ", ticketID, ", please wait . . . . .")
         ticketsJSON = self.connectToAPI(False, ticketID)
-        # print(ticketsJSON)
-        ticketsJSON = self.formatJSON(ticketsJSON, True)
-        return ticketsJSON
+        if "ticket" in ticketsJSON:
+            updated, created = self.formatDates(ticketsJSON["ticket"]["updated_at"],
+                                                ticketsJSON["ticket"]["created_at"])
+            ticketsJSON["ticket"]["updated_at"] = str(updated)
+            ticketsJSON["ticket"]["created_at"] = str(created)
+            return ticketsJSON
+        else:
+            return 0
 
     def connectToAPI(self, all=True, id=""):
         subdomain = "paarth"
@@ -35,10 +46,13 @@ class APIRequestHandler:
         if all:
             self.URL = "https://" + subdomain + ".zendesk.com/api/v2/tickets.json"
         else:
-            self.URL = "https://" + subdomain + ".zendesk.com/api/v2/tickets/" + id + ".json"
+            self.URL = "https://" + subdomain + ".zendesk.com/api/v2/tickets/" + str(id) + ".json"
         try:
             r = requests.get(self.URL, auth=(loginID, password))
-            self.data = json.loads(r.text)
+            if r.status_code != 200:
+                print("Bad request. Error getting data from API. Error Code: ", r.status_code)
+                return False
+            self.data = r.json()  # Or json.loads(r.text) can also work
             return self.data
         except requests.exceptions.HTTPError as e:
             print(e)
@@ -48,23 +62,13 @@ class APIRequestHandler:
             print(e)
             print("Error connecting to the API due to unavailability")
             return None
+        except ConnectionError:
+            print("Connection Error.")
+            return None
 
-    def formatJSON(self, ticketsJSON, single=False):
-        if single:
-            t1 = time.strptime(ticketsJSON["ticket"]["updated_at"], "%Y-%m-%dT%H:%M:%SZ")
-            t2 = time.strptime(ticketsJSON["ticket"]["created_at"], "%Y-%m-%dT%H:%M:%SZ")
-            updated = "%d-%d-%d %d:%d:%d" % (t1[0], t1[1], t1[2], t1[3], t1[4], t1[5])
-            created = "%d-%d-%d %d:%d:%d" % (t2[0], t2[1], t2[2], t2[3], t2[4], t2[5])
-            ticketsJSON["ticket"]["updated_at"] = updated
-            ticketsJSON["ticket"]["created_at"] = created
-            return ticketsJSON
-        else:
-            tickets = ticketsJSON["tickets"]
-            for i in range(len(tickets)):
-                t1 = time.strptime(ticketsJSON["tickets"][i]["updated_at"], "%Y-%m-%dT%H:%M:%SZ")
-                t2 = time.strptime(ticketsJSON["tickets"][i]["created_at"], "%Y-%m-%dT%H:%M:%SZ")
-                updated = "%d-%d-%d %d:%d:%d" % (t1[0], t1[1], t1[2], t1[3], t1[4], t1[5])
-                created = "%d-%d-%d %d:%d:%d" % (t2[0], t2[1], t2[2], t2[3], t2[4], t2[5])
-                ticketsJSON["tickets"][i]["updated_at"] = updated
-                ticketsJSON["tickets"][i]["created_at"] = created
-            return ticketsJSON
+    def formatDates(self, updatedAt, createdAt):
+        t1 = time.strptime(updatedAt, "%Y-%m-%dT%H:%M:%SZ")
+        t2 = time.strptime(createdAt, "%Y-%m-%dT%H:%M:%SZ")
+        updated = "%d-%d-%d %d:%d:%d" % (t1[0], t1[1], t1[2], t1[3], t1[4], t1[5])
+        created = "%d-%d-%d %d:%d:%d" % (t2[0], t2[1], t2[2], t2[3], t2[4], t2[5])
+        return updated, created

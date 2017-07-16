@@ -10,7 +10,7 @@ class AppView:
         self.page_limit = 25
 
     def startMessage(self):
-        print("-------------------WELCOME TO ZENDESK TICKET VIEWER---------------------")
+        print("\n\n-------------------WELCOME TO ZENDESK TICKET VIEWER---------------------")
         print("This application lets you view tickets and their details on your zendesk account")
         print("Please enter a command, to view command options, type 'menu': ", end="")
         return 0
@@ -20,7 +20,6 @@ class AppView:
         print("1 : ", "Display all tickets")
         print("2 : ", "Display Single ticket")
         print("q : ", "Quit program")
-        print("\n")
         print("Enter your choice: ", end="")
         return 0
 
@@ -72,8 +71,9 @@ class AppView:
         return pageNo
 
     def displaySingleTicket(self, ticketsJSON):
-        if len(ticketsJSON) > 0:
-            self.printTicket(ticketsJSON["ticket"]["id"], ticketsJSON["ticket"]["status"], ticketsJSON["ticket"]["subject"],
+        if "ticket" in ticketsJSON:
+            self.printTicket(ticketsJSON["ticket"]["id"], ticketsJSON["ticket"]["status"],
+                             ticketsJSON["ticket"]["subject"],
                              ticketsJSON["ticket"]["requester_id"], ticketsJSON["ticket"]["updated_at"])
             return 0
         else:

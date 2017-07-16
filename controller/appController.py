@@ -17,43 +17,30 @@ class AppController:
         self.api = APIRequestHandler()
         self.input = ""
         self.currID = 999  # A random ticket ID. This points to the ticket we are currently viewing.
-
+        self.currPage = 999 # A random page number. This points to the current page we are viewing.
     def run(self):
-        self.showWelcomeMenu()
-        return 0
+        self.showMainMenu()
 
     def getInput(self):
         self.input = input()
 
     def showMainMenu(self):
+        self.view.startMessage()
         while True:
-            self.view.printMenu()
             self.getInput()
-            if self.input == '1':
+            if self.input == "menu":
+                self.view.printMenu()
+            elif self.input == '1':
                 self.showAllTickets()
             elif self.input == '2':
                 self.showOneTicket()
+                self.view.printMenu()
             elif self.input == 'q':
                 print("Quit")
                 self.view.quit()
             else:
-                # print("Hi!")
                 self.view.inputError()
             self.input = ""
-
-    def showWelcomeMenu(self):
-        self.view.startMessage()
-        self.getInput()
-        while True:
-            if self.input == "menu":
-                self.showMainMenu()
-            elif self.input == "q":
-                self.view.quit()
-            else:
-                self.view.inputError()
-            self.input = ""
-            self.getInput()
-
 
     def showAllTickets(self):
         try:
@@ -71,7 +58,6 @@ class AppController:
             elif self.input == "menu":
                 self.view.printMenu()
                 break
-
             elif self.input == "d":
                 page += 1
                 page = self.view.displayTickets(tickets, page)
@@ -83,6 +69,7 @@ class AppController:
 
                 self.view.inputError()
             self.input = ""
+            self.currPage = page
         return 0
 
     def showOneTicket(self):
@@ -95,10 +82,14 @@ class AppController:
         except RuntimeError:
             print("Non-existent ticket ID. Can't fetch details. Please enter a valid ticket ID.")
             return None
+        if ticket != 0:
+            self.view.displaySingleTicket(ticket)
+            self.currID = int(id)
+            return 0
+        else:
+            print("Ticket ID you entered doesn't exist on your account.\n")
 
-        self.view.displaySingleTicket(ticket)
-        self.currID = int(id)
-        return 0
+        return 1
 
 
 if __name__ == "__main__":
