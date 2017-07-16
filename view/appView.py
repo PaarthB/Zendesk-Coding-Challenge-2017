@@ -3,6 +3,7 @@ A static View in the view package for the MVC pattern. This view is controlled b
 information & general program related outputs to the CLI screen
 """
 import sys
+import math
 
 
 class AppView:
@@ -47,7 +48,7 @@ class AppView:
     def displayTickets(self, ticketsJSON, pageNo):
         ticketsArr = ticketsJSON["tickets"]
         # print(ticketsArr[0])
-        totalPages = len(ticketsArr) / self.page_limit
+        totalPages = math.ceil(float(len(ticketsArr)) / float(self.page_limit))
         print("total tickets= ", len(ticketsArr))
 
         # circular rotation of pages after limit or before start
