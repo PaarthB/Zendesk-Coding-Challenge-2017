@@ -28,13 +28,17 @@ class MockResponse:
 def test_get_one_ticket(url="", auth=""):
     f2 = open('data (1).json', 'r')  # Sample json ticket data for one ticket
     j2 = json.load(f2)
+    f2.close()
     mockObject = MockResponse(j2, 200)
     return mockObject
 
 
 def test_get_all_tickets(url="", auth=""):  # Sample json ticket data for bulk tickets
     f1 = open('data.json', 'r')
+    # This file has 'next_page' as null so that tests don't get stuck in infinite loop trying to refer the same link
+    # in this file again and again.
     j1 = json.load(f1)
+    f1.close()
     mockObject = MockResponse(j1, 200)
     return mockObject
 
@@ -42,6 +46,7 @@ def test_get_all_tickets(url="", auth=""):  # Sample json ticket data for bulk t
 def test_get_bad_request_response(url="", auth=""):  # Sample json ticket data for bulk tickets
     f1 = open('data.json', 'r')
     j1 = json.load(f1)
+    f1.close()
     mockObject = MockResponse(j1, 400)
     return mockObject
 
@@ -54,6 +59,7 @@ class TicketViewerTester(unittest.TestCase):
         ticket = api.getTicketByID(2)
         self.assertEqual(len(ticket), 1)
         assert "ticket" in ticket
+        self.assertEqual(ticket["ticket"]["id"], 2)
 
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_all_tickets)
     # replace requests.get with my dummy function to to simulate API call/request.
@@ -61,6 +67,9 @@ class TicketViewerTester(unittest.TestCase):
         api = APIRequestHandler()
         ticket = api.getAllTickets()
         assert "tickets" in ticket
+        assert "next_page" in ticket
+        assert "previous_page" in ticket
+        assert "count" in ticket
         print("Ticket Length: ", len(ticket["tickets"]))
         self.assertEqual(len(ticket["tickets"]), 100)
 

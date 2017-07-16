@@ -5598,7 +5598,7 @@
          "allow_channelback":false
       }
    ],
-   "next_page":"https://paarth.zendesk.com/api/v2/tickets.json?page=2",
+   "next_page":null,
    "previous_page":null,
    "count":101
 }
