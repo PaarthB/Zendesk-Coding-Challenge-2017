@@ -5,7 +5,7 @@ It can be extended in the future to extra functionality like posting new data up
 """
 import json
 import requests
-import time
+import datetime
 
 
 class APIRequestHandler:
@@ -16,12 +16,12 @@ class APIRequestHandler:
     def getAllTickets(self):
         ticketsJSON = self.connectToAPI(True, "")
         if "tickets" in ticketsJSON:
-            for i in range(len(ticketsJSON)):
+            print("Total tickets= ", len(ticketsJSON["tickets"]))
+            for i in range(len(ticketsJSON["tickets"])):
                 updated, created = self.formatDates(ticketsJSON["tickets"][i]["updated_at"],
                                                     ticketsJSON["tickets"][i]["created_at"])
                 ticketsJSON["tickets"][i]["updated_at"] = str(updated)
                 ticketsJSON["tickets"][i]["created_at"] = str(created)
-
             return ticketsJSON
         else:
             return 0
@@ -53,6 +53,20 @@ class APIRequestHandler:
                 print("Bad request. Error getting data from API. Error Code: ", r.status_code)
                 return False
             self.data = r.json()  # Or json.loads(r.text) can also work
+            new = self.data
+            next_page = []
+            # Go through all web pages containing tickets and add them to tickets json. One page can contain 100 tickets
+            # Make sure user has chosen to display all tickets, next page exists and has not been already visited.
+            while all and new["next_page"] is not None and new["next_page"] not in next_page:
+                self.URL = new["next_page"]
+                next_page.append(self.data["next_page"])
+                next_page.append(self.URL)
+                # print(self.URL)
+                r = requests.get(self.URL, auth=(loginID, password))
+                new = r.json()
+                print("Next: ", new["next_page"])
+                self.data["tickets"].extend(new["tickets"])  # Adding new tickets in the next API web page.
+
             return self.data
         except requests.exceptions.HTTPError as e:
             print(e)
@@ -67,8 +81,8 @@ class APIRequestHandler:
             return None
 
     def formatDates(self, updatedAt, createdAt):
-        t1 = time.strptime(updatedAt, "%Y-%m-%dT%H:%M:%SZ")
-        t2 = time.strptime(createdAt, "%Y-%m-%dT%H:%M:%SZ")
-        updated = "%d-%d-%d %d:%d:%d" % (t1[0], t1[1], t1[2], t1[3], t1[4], t1[5])
-        created = "%d-%d-%d %d:%d:%d" % (t2[0], t2[1], t2[2], t2[3], t2[4], t2[5])
+        t1 = datetime.datetime.strptime(updatedAt, "%Y-%m-%dT%H:%M:%SZ")
+        t2 = datetime.datetime.strptime(createdAt, "%Y-%m-%dT%H:%M:%SZ")
+        updated = "%d-%d-%d %d:%d:%d" % (t1.year, t1.month, t1.day, t1.hour, t1.minute, t1.second)
+        created = "%d-%d-%d %d:%d:%d" % (t2.year, t2.month, t2.day, t2.hour, t2.minute, t2.second)
         return updated, created
