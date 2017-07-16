@@ -17,7 +17,8 @@ class AppController:
         self.api = APIRequestHandler()
         self.input = ""
         self.currID = 999  # A random ticket ID. This points to the ticket we are currently viewing.
-        self.currPage = 999 # A random page number. This points to the current page we are viewing.
+        self.currPage = 999  # A random page number. This points to the current page we are viewing.
+
     def run(self):
         self.showMainMenu()
 
@@ -66,7 +67,6 @@ class AppController:
                 page -= 1
                 page = self.view.displayTickets(tickets, page)
             else:
-
                 self.view.inputError()
             self.input = ""
             self.currPage = page
