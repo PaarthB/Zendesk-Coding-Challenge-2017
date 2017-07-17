@@ -118,7 +118,7 @@ class ControllerTester(unittest.TestCase):
     # Simulate and test user inputs and related outputs to show all tickets then quit, followed by display all & paging.
     # ['1', 'q', 'd', 'q']:
     # Show all tickets (1) through menu then quit (q). Then display all and go down one page (d) & quit (q)
-    @patch("builtins.input", side_effect=['1', 'q', 'd', 'q'])
+    @patch("builtins.input", side_effect=['1', 'q', '1', 'd', 'q'])
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_all_tickets)
     def test_show_all(self, input, test_get):
         controller = AppController()
@@ -126,7 +126,7 @@ class ControllerTester(unittest.TestCase):
             controller.showMainMenu()
         self.assertEqual(cm.exception.code, 0)
         with self.assertRaises(SystemExit) as cm:
-            controller.showAllTickets()
+            controller.showMainMenu()
         self.assertEqual(cm.exception.code, 0)
         self.assertEqual(controller.currPage, 2)  # We scrolled down one page, so checking if paging happened correctly.
 
