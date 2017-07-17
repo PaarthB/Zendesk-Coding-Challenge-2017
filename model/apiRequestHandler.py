@@ -3,7 +3,6 @@ Model of the model package in MVC pattern. Does all the API stuff: authenticatio
 from the API.
 It can be extended in the future to extra functionality like posting new data up on the server, token authentication.
 """
-import json
 import requests
 import datetime
 
@@ -15,28 +14,29 @@ class APIRequestHandler:
 
     def getAllTickets(self):
         ticketsJSON = self.connectToAPI(True, "")
-        if "tickets" in ticketsJSON:
+        if ticketsJSON not in [False, None] and "tickets" in ticketsJSON:
             print("Total tickets= ", len(ticketsJSON["tickets"]))
             for i in range(len(ticketsJSON["tickets"])):
                 updated, created = self.formatDates(ticketsJSON["tickets"][i]["updated_at"],
                                                     ticketsJSON["tickets"][i]["created_at"])
-                ticketsJSON["tickets"][i]["updated_at"] = str(updated)
-                ticketsJSON["tickets"][i]["created_at"] = str(created)
+                ticketsJSON["tickets"][i]["updated_at"] = str(updated)  # Setting the formatted dates
+                ticketsJSON["tickets"][i]["created_at"] = str(created)  # Setting the formatted dates
             return ticketsJSON
-        else:
+        elif not ticketsJSON or ticketsJSON is None:
             return 0
 
     def getTicketByID(self, ticketID):
         print("Fetching ticket ", ticketID, ", please wait . . . . .")
         ticketsJSON = self.connectToAPI(False, ticketID)
-        if "ticket" in ticketsJSON:
+        if ticketsJSON not in [None, False] and 'ticket' in ticketsJSON:
             updated, created = self.formatDates(ticketsJSON["ticket"]["updated_at"],
                                                 ticketsJSON["ticket"]["created_at"])
             ticketsJSON["ticket"]["updated_at"] = str(updated)
             ticketsJSON["ticket"]["created_at"] = str(created)
             return ticketsJSON
-        else:
+        elif not ticketsJSON or ticketsJSON is None:
             return 0
+        return 1
 
     def connectToAPI(self, all=True, id=""):
         subdomain = "paarth"
@@ -59,22 +59,21 @@ class APIRequestHandler:
             # Make sure user has chosen to display all tickets, next page exists and has not been already visited.
             while all and new["next_page"] is not None and new["next_page"] not in next_page:
                 self.URL = new["next_page"]
-                next_page.append(self.data["next_page"])
                 next_page.append(self.URL)
                 # print(self.URL)
                 r = requests.get(self.URL, auth=(loginID, password))
                 new = r.json()
                 print("Next: ", new["next_page"])
-                self.data["tickets"].extend(new["tickets"])  # Adding new tickets in the next API web page.
+                self.data["tickets"].extend(new["tickets"])  # Adding new tickets found in the next API web page.
 
             return self.data
         except requests.exceptions.HTTPError as e:
             print(e)
-            print("Invalid user credentials, can't authorize you.")
+            print("Can't authorize you, invalid credentials. ")
             return None
         except requests.exceptions.RequestException as e:
             print(e)
-            print("Error connecting to the API due to unavailability")
+            print("API unavailable. Please try again later")
             return None
         except ConnectionError:
             print("Connection Error.")

@@ -49,7 +49,10 @@ class AppController:
         except RuntimeError:
             print("Couldn't fetch tickets. Error connecting to API or loading data from it")
             return None
-        page = self.view.displayTickets(tickets, 1)
+        if tickets != 0:
+            page = self.view.displayTickets(tickets, 1)
+        else:
+            print("No tickets on your account to display")
         while True:
             self.getInput()
             if self.input == 'q':
@@ -88,8 +91,7 @@ class AppController:
             return 0
         else:
             print("Ticket ID you entered doesn't exist on your account.\n")
-
-        return 1
+            return False
 
 
 if __name__ == "__main__":
