@@ -1,6 +1,6 @@
 # Zendesk-Coding-Challenge-2017
 
-Zendesk 2017 Coding Challenge for Melbourne Internship<br />
+Zendesk 2017 Coding Challenge for Melbourne Internship<br /><br />
 **NOTE**: It is highly recommended that you use Windows 10 for running and testing this app. Even though installation and setup instructions for Ubuntu 16.04 and Mac OSX have been provided, this app hasn't been run there, so it may still have an issue. Windows 10 is the recommended OS for using this app for now.
 
 ## Installation & Set-up Instructions
@@ -65,23 +65,23 @@ pip3 install requests
 ```
 
 # Usage
-To start using this app, download the git repository or the zip file. Open terminal/command line and go in the **controller** directory of this app. Then type:<br />
-For Windows:
+To start using this app, download the git repository or the zip file. Open terminal/command line and go in the **controller** directory of this app. Then type:<br /><br />
+**For Windows:**
 ```shell
 python appController.py
 ```
-For Ubuntu/Mac OSX:
+**For Ubuntu/Mac OSX:**
 ```shell
 python3 appController.py
 ```
 
 # Testing
-For testing this app, go to the "tests" directory within the app on command line/terminal. Then type:<br />
-For Windows:
+For testing this app, go to the "tests" directory within the app on command line/terminal. Then type (**-b** used for supressing output/print statements during unit testing):<br /><br />
+**For Windows:**
 ```shell
 python testTicketViewer.py -b
 ```
-For Ubuntu/Mac OSX:
+**For Ubuntu/Mac OSX:**
 ```shell
 python3 testTicketViewer.py -b
 ```
