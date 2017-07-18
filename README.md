@@ -81,7 +81,7 @@ python3 appController.py
 python appController.py
 ```
 You should see the following screen:
-```shell
+```
 -------------------WELCOME TO ZENDESK TICKET VIEWER---------------------
 This application lets you view tickets and their details on your zendesk account
 Please enter a command, to view command options, type 'menu': menu
