@@ -46,13 +46,11 @@ class AppController:
     def showAllTickets(self):
         try:
             tickets = self.api.getAllTickets()
-        except RuntimeError:
-            print("Couldn't fetch tickets. Error connecting to API or loading data from it")
-            return None
-        if tickets != 0:
+            assert tickets not in [0, 1]
             page = self.view.displayTickets(tickets, 1)
-        else:
+        except AssertionError as e:
             print("No tickets on your account to display")
+            return None
         while True:
             self.getInput()
             if self.input == 'q':
@@ -82,14 +80,11 @@ class AppController:
         self.input = ""
         try:
             ticket = self.api.getTicketByID(id)
-        except RuntimeError:
-            print("Non-existent ticket ID. Can't fetch details. Please enter a valid ticket ID.")
-            return None
-        if ticket != 0:
+            assert ticket not in [0, 1]
             self.view.displaySingleTicket(ticket)
             self.currID = int(id)
             return 0
-        else:
+        except AssertionError as e:
             print("Ticket ID you entered doesn't exist on your account.\n")
             return False
 
