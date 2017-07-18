@@ -14,30 +14,38 @@ class APIRequestHandler:
 
     def getAllTickets(self):
         ticketsJSON = self.connectToAPI(True, "")
-        if ticketsJSON not in [False, None] and "tickets" in ticketsJSON:
-            print("Total tickets= ", len(ticketsJSON["tickets"]))
+        if ticketsJSON in [1, False, None] or "tickets" not in ticketsJSON:
+            if ticketsJSON is None:
+                return 1  # Invalid user credentials or authentication not enabled
+            elif ticketsJSON == 1:
+                return 0  # If API is unavailable
+            elif ticketsJSON is False or "tickets" not in ticketsJSON:
+                # For any other status code error or if no tickets exist
+                return -1
+
+        elif ticketsJSON not in [1, False, None] and "tickets" in ticketsJSON:
             for i in range(len(ticketsJSON["tickets"])):
                 updated, created = self.formatDates(ticketsJSON["tickets"][i]["updated_at"],
                                                     ticketsJSON["tickets"][i]["created_at"])
                 ticketsJSON["tickets"][i]["updated_at"] = str(updated)  # Setting the formatted dates
                 ticketsJSON["tickets"][i]["created_at"] = str(created)  # Setting the formatted dates
             return ticketsJSON
-        elif ticketsJSON in [False, None]:
-            return 0
-        return 1
 
     def getTicketByID(self, ticketID):
-        print("Fetching ticket ", ticketID, ", please wait . . . . .")
         ticketsJSON = self.connectToAPI(False, ticketID)
-        if ticketsJSON not in [None, False] and 'ticket' in ticketsJSON:
+        if ticketsJSON not in [None, False, 1] and "ticket" in ticketsJSON:
             updated, created = self.formatDates(ticketsJSON["ticket"]["updated_at"],
                                                 ticketsJSON["ticket"]["created_at"])
             ticketsJSON["ticket"]["updated_at"] = str(updated)
             ticketsJSON["ticket"]["created_at"] = str(created)
             return ticketsJSON
-        elif ticketsJSON in [None, False]:
-            return 0
-        return 1
+        elif ticketsJSON in [None, False, 1]:
+            if ticketsJSON is False:
+                return -1  # Invalid ticket ID
+            elif ticketsJSON == 1:
+                return 0  # If API is unavailable
+            elif ticketsJSON is None:
+                return 1  # Invalid user credentials
 
     def connectToAPI(self, all=True, id=""):
         subdomain = "paarth"
@@ -52,7 +60,13 @@ class APIRequestHandler:
             r = requests.get(self.URL, auth=(loginID, password))
             if r.status_code != 200:
                 print("Bad request. Error getting data from API. Error Code: ", r.status_code)
-                return False
+                if r.status_code == 401:
+                    return None  # Authentication not allowed or invalid user credentials
+                elif r.status_code == 404:  # 404 = No tickets or invalid ticket ID
+                    return False
+                elif r.status_code == 503:  # API unavailable
+                    return 1
+                return 1  # For all other bad requests
             self.data = r.json()  # Or json.loads(r.text) can also work
             new = self.data
             next_page = []
@@ -61,24 +75,16 @@ class APIRequestHandler:
             while all and new["next_page"] is not None and new["next_page"] not in next_page:
                 self.URL = new["next_page"]
                 next_page.append(self.URL)
-                # print(self.URL)
                 r = requests.get(self.URL, auth=(loginID, password))
                 new = r.json()
-                print("Next: ", new["next_page"])
+                # print("Next: ", new["next_page"])
                 self.data["tickets"].extend(new["tickets"])  # Adding new tickets found in the next API web page.
 
             return self.data
-        except requests.exceptions.HTTPError as e:
-            print(e)
-            print("Can't authorize you, invalid credentials. ")
-            return None
         except requests.exceptions.RequestException as e:
-            print(e)
-            print("API unavailable. Please try again later")
-            return None
+            return 1
         except ConnectionError:
-            print("Connection Error.")
-            return None
+            return 1
 
     def formatDates(self, updatedAt, createdAt):
         t1 = datetime.datetime.strptime(updatedAt, "%Y-%m-%dT%H:%M:%SZ")
