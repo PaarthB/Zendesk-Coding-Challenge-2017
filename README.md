@@ -22,8 +22,8 @@ To install Python 3.6.0, head to https://www.python.org/downloads/release/python
 For installing Python 3.6.0 on Ubuntu 16.04, run the following commands in terminal successively. It may ask you for admin password the first time:
 ```shell
 sudo add-apt-repository ppa:jonathonf/python-3.6
-sudo apt-getupdate
-sudo apt install python3.6
+sudo apt-get update
+sudo apt-get install python3.6
 ```
 
 ## Installation of Libraries/Modules used
@@ -88,8 +88,8 @@ Please enter a command, to view command options, type 'menu': menu
 Menu Options:
 1 : Display all tickets
 2 : Display Single ticket
-q : Quit program")
-Enter your choice: 
+q : Quit program
+Enter your choice: 1
 ```
 ## Application Testing:
 This app has automated tests within the file **testTicketViewer.py** inside **tests** folder, which are executed at once when the test file is run. For testing this app, go to the **"tests"** folder within the app on command line/terminal by using **cd** commands. Then type:<br /><br />
@@ -106,7 +106,7 @@ python testTicketViewer.py -b
 
 ## To improve:
 - [x] Test file class division (Done)
-- [ ] comments, renaming of methods and code readability and unserstandability (Left)
+- [x] comments, renaming of methods and code readability and unserstandability (Done)
 - [x] Readme instructions including usage, system requirements, dependencies, pictures etc. (Done)
 - [x] Checking any irrelevant/redundant code and thorough error handling checking (Done)
 - [x] Making sure spaces and indents don't create errors (Done)
