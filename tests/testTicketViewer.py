@@ -1,9 +1,9 @@
 """
 Testing for Ticket Viewer App. 
 Tests for:
-    - API Requests and Response, by mocking Network Access (application model)
-    - Controller paths, by user input simulation and API access simulation through mocks. (application controller)
-    - Correct functionality of View (application view)
+    - (application model): API Requests and Response, by mocking Network Access 
+    - (application controller): Controller paths, by user input simulation and API access simulation through mocks. 
+    - (application view): Correct functionality of View 
 """
 
 import unittest
@@ -93,7 +93,7 @@ class ModelTester(unittest.TestCase):
 
 
 class ViewTester(unittest.TestCase):
-    # Testing basic functionality of view
+    # Testing that basic functionality of view is working correctly
     def test_view(self):
         j1 = test_get_one_ticket()
         j2 = test_get_all_tickets()
@@ -116,8 +116,8 @@ class ControllerTester(unittest.TestCase):
         self.assertEqual(cm.exception.code, 0)  # Confirming system raising expected exception code
 
     # Simulate and test user inputs and related outputs to show all tickets then quit, followed by display all & paging.
-    # ['1', 'q', 'd', 'q']:
-    # Show all tickets (1) through menu then quit (q). Then display all and go down one page (d) & quit (q)
+    # ['1', 'q', , '1', 'd', 'q']:
+    # Show all tickets (1) through menu then quit (q). Then display all (1), go down one page (d) & quit (q)
     @patch("builtins.input", side_effect=['1', 'q', '1', 'd', 'q'])
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_all_tickets)
     def test_show_all(self, input, test_get):
