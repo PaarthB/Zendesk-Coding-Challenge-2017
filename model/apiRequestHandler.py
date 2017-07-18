@@ -22,8 +22,9 @@ class APIRequestHandler:
                 ticketsJSON["tickets"][i]["updated_at"] = str(updated)  # Setting the formatted dates
                 ticketsJSON["tickets"][i]["created_at"] = str(created)  # Setting the formatted dates
             return ticketsJSON
-        elif not ticketsJSON or ticketsJSON is None:
+        elif ticketsJSON in [False, None]:
             return 0
+        return 1
 
     def getTicketByID(self, ticketID):
         print("Fetching ticket ", ticketID, ", please wait . . . . .")
@@ -34,7 +35,7 @@ class APIRequestHandler:
             ticketsJSON["ticket"]["updated_at"] = str(updated)
             ticketsJSON["ticket"]["created_at"] = str(created)
             return ticketsJSON
-        elif not ticketsJSON or ticketsJSON is None:
+        elif ticketsJSON in [None, False]:
             return 0
         return 1
 
