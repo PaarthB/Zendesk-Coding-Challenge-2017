@@ -6,7 +6,7 @@ Zendesk 2017 Coding Challenge for Melbourne Internship<br /><br />
 ## Installation & Set-up Instructions
 This app has been written in Python 3.6.0. It has only been tested to run on Windows 10. The following are the installation instructions of Python 3.6.0 on Windows (hopefully all versions, but it is preferred to use Windows 10), Ubuntu 16.04 and Mac OSX. Each of these installations come with **pip** installation by default.
 
-### Windows 10 Installation
+### Windows 10 Python 3.6.0 Installation
 To install Python 3.6.0, head to https://www.python.org/downloads/release/python-360/ and download the file which says **"Windows x86-64 executable installer"**. After downloading, run the executable and follow the instrcutions to get a full installation of Python 3.6.0 on your system.
 
 ### Ubuntu 16.04 Installation
