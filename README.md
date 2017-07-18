@@ -5,7 +5,7 @@ Zendesk 2017 Coding Challenge for Melbourne Internship<br /><br />
 
 ## Application Architecture/Design Explanation:
 ![Image](/deps.gif?raw=true "MVC Patter Passive View")<br />
-This Application uses a variation of MVC and MVP. As with these the UI is split between a view that handles display and a controller that responds to user gestures. The significant change with Passive View is that the view is made completely passive and is no longer responsible for updating itself from the model. As a result all of the view logic is in the controller and no dependencies in either direction between the view and the model. For more info, read https://martinfowler.com/eaaDev/PassiveScreen.html.
+This Application uses a variation of MVC and MVP. As with these the UI is split between a view that handles display and a controller that responds to user gestures. The significant change with Passive View is that the view is made completely passive and is no longer responsible for updating itself from the model. As a result all of the view logic is in the controller and no dependencies in either direction between the view and the model. <br />For more info, read https://martinfowler.com/eaaDev/PassiveScreen.html.
 
 ## Installation & Set-up
 This app has been written in Python 3.6.0. The following are the installation instructions of Python 3.6.0 on 64-bit: Windows 10, Ubuntu 16.04 and Mac OS X 10.11 El Capitan. Each of these installations come with **pip**/**pip3** installation by default.
@@ -71,8 +71,7 @@ sudo pip3 install requests
 ```
 
 ## Application Usage:
-To start using this app, download the git repository or the zip file. Open terminal/command line and go in the **controller** folder of this app through **cd** commands. Then type:<br /><br 
-
+To start using this app, download the git repository or the zip file. Open terminal/command line and go in the **controller** folder of this app through **cd** commands. Then type:<br /><br />
 **For Mac OS X 10.11 El Capitan & Ubuntu 16.04:**
 ```shell
 python3 appController.py
