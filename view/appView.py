@@ -1,6 +1,6 @@
 """
-A static View in the view package for the MVC pattern. This view is controlled by the controller and displays ticket 
-information & general program related outputs to the CLI screen
+A static View in the view package for the MVC pattern. This view is controlled by the controller. 
+Displays program messages and ticket information on the CLI screen
 """
 import sys
 import math
@@ -31,6 +31,13 @@ class AppView:
 
     def getTicketID(self):
         print("Enter the ticket ID: ", end="")
+        return 0
+
+    def fetchTickets(self, ticketID):
+        if ticketID == "all":
+            print("Fetching tickets, please wait . . . . .")
+        else:
+            print("Fetching ticket", ticketID + ",", "please wait . . . . .")
         return 0
 
     def inputError(self):
@@ -82,8 +89,7 @@ class AppView:
         print("Enter 'd' for next page, 'u' for previous page, 'menu' for menu and q for quit")
         return pageNo  # Current page no
 
-    def displaySingleTicket(self, ticketsJSON, ticketID=""):
-        print("Fetching ticket ", ticketID, ", please wait . . . . .")
+    def displayTicket(self, ticketsJSON):
         if "ticket" in ticketsJSON:
             self.printTicket(ticketsJSON["ticket"]["id"], ticketsJSON["ticket"]["status"],
                              ticketsJSON["ticket"]["subject"], ticketsJSON["ticket"]["requester_id"],
@@ -94,8 +100,7 @@ class AppView:
 
     def printTicket(self, ticketID, status, subject="", requesterID="", updatedAt=""):
         if subject == "":
-            print("<" + status + ">", "Ticket", str(ticketID), "opened by", requesterID,
-                  "updated at", updatedAt)
+            print("<" + status + ">", "Ticket", str(ticketID), "opened by", requesterID, "updated at", updatedAt)
         else:
             print("<" + status + ">", "Ticket", str(ticketID), "subject '" + subject + "'", "opened by", requesterID,
                   "updated at", updatedAt)
