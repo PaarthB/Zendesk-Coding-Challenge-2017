@@ -13,29 +13,29 @@ from model.apiRequestHandler import APIRequestHandler
 
 class AppController:
     def __init__(self):
-        self.view = AppView()
-        self.api = APIRequestHandler()
-        self.input = ""
+        self.view = AppView()  # An AppView instance being used by this class
+        self.api = APIRequestHandler()  # An APIRequestHandler instance being used by this class
+        self.input = "" # Input given by user
         self.currID = 999  # A random ticket ID. This points to the ticket we are currently viewing.
         self.currPage = 999  # A random page number. This points to the current page we are viewing.
 
-    def run(self):
+    def run(self):  # Driver method
         self.showMainMenu()
 
-    def getInput(self):
+    def getInput(self):  # Prompts user for input
         self.input = input()
 
-    def showMainMenu(self):
+    def showMainMenu(self):  # Main menu view controller
         self.view.startMessage()
         while True:
             self.getInput()
             if self.input == "menu":
                 self.view.printMenu()
             elif self.input == '1':
-                response = self.showAllTickets()
+                response = self.showTickets()
                 if response is None: self.view.printMenu()
             elif self.input == '2':
-                self.showOneTicket()
+                self.showTicket()
                 self.view.printMenu()
             elif self.input == 'q':
                 print("Quit")
@@ -44,9 +44,10 @@ class AppController:
                 self.view.inputError()
             self.input = ""
 
-    def showAllTickets(self):
+    def showTickets(self):  # Controller method to display all tickets. Handles user inputs for paging requests
         try:
-            tickets = self.api.getAllTickets()
+            self.view.fetchTickets("all")
+            tickets = self.api.getTickets()
             assert tickets not in [-1, 0, 1]
             page = self.view.displayTickets(tickets, 1)
         except AssertionError as e:
@@ -79,15 +80,16 @@ class AppController:
             self.currPage = page
         return 0
 
-    def showOneTicket(self):
+    def showTicket(self):  # Controller method for displaying one ticket in view
         self.view.getTicketID()
         self.getInput()
         ticketID = self.input
         self.input = ""
         try:
-            ticket = self.api.getTicketByID(ticketID)
+            self.view.fetchTickets(ticketID)
+            ticket = self.api.getTicket(ticketID)
             assert ticket not in [-1, 0, 1]
-            self.view.displaySingleTicket(ticket, ticketID)
+            self.view.displayTicket(ticket)
             self.currID = int(ticketID)
             return 0
         except AssertionError as e:
@@ -101,5 +103,5 @@ class AppController:
 
 
 if __name__ == "__main__":
-    t = AppController()
+    t = AppController()  # Starting point of the application
     t.run()
