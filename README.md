@@ -4,7 +4,6 @@ Zendesk 2017 Coding Challenge for Melbourne Internship<br /><br />
 **NOTE**: This app has been tested to work on 64-bit: **Windows 10**, **Mac OS X 10.11 El Capitan** and **Linux Ubuntu 16.04 LTS Xenial Xerus**. It is recommended to run this app on one of these OS, since any other OS would mean you'd have to find out its own installation and usage instructions, which would be time consuming and would need trial-error.
 
 ## Application Architecture/Design Explanation:
-![MVC Pattern](/deps.gif)(#features)
 ![Image](/deps.gif?raw=true "MVC Patter Passive View")
 This Application uses a variation of MVC and MVP. As with these the UI is split between a view that handles display and a controller that responds to user gestures. The significant change with Passive View is that the view is made completely passive and is no longer responsible for updating itself from the model. As a result all of the view logic is in the controller and no dependencies in either direction between the view and the model. For more info, read https://martinfowler.com/eaaDev/PassiveScreen.html.
 
