@@ -1,6 +1,6 @@
 """
-Controller package for the MVC pattern. Responsible for user I/O, drives the view logic and updates model state. Gets
-data from model by querying it, and sends it to view to be displayed.
+Controller of the controller package for the MVC pattern. Responsible for user I/O, drives the view logic and updates 
+model state. Gets data from model by querying it, and sends it to view to be displayed.
 """
 import sys
 from os.path import dirname, abspath
@@ -32,7 +32,8 @@ class AppController:
             if self.input == "menu":
                 self.view.printMenu()
             elif self.input == '1':
-                self.showAllTickets()
+                response = self.showAllTickets()
+                if response is None: self.view.printMenu()
             elif self.input == '2':
                 self.showOneTicket()
                 self.view.printMenu()
@@ -46,10 +47,15 @@ class AppController:
     def showAllTickets(self):
         try:
             tickets = self.api.getAllTickets()
-            assert tickets not in [0, 1]
+            assert tickets not in [-1, 0, 1]
             page = self.view.displayTickets(tickets, 1)
         except AssertionError as e:
-            print("No tickets on your account to display")
+            if tickets == -1:
+                self.view.unknownError()
+            elif tickets == 1:
+                self.view.authenticationError()
+            elif tickets == 0:
+                self.view.apiUnavailable()
             return None
         while True:
             self.getInput()
@@ -76,16 +82,21 @@ class AppController:
     def showOneTicket(self):
         self.view.getTicketID()
         self.getInput()
-        id = self.input
+        ticketID = self.input
         self.input = ""
         try:
-            ticket = self.api.getTicketByID(id)
-            assert ticket not in [0, 1]
-            self.view.displaySingleTicket(ticket)
-            self.currID = int(id)
+            ticket = self.api.getTicketByID(ticketID)
+            assert ticket not in [-1, 0, 1]
+            self.view.displaySingleTicket(ticket, ticketID)
+            self.currID = int(ticketID)
             return 0
         except AssertionError as e:
-            print("Ticket ID you entered doesn't exist on your account.\n")
+            if ticket == 1:
+                self.view.authenticationError()
+            elif ticket == -1:
+                self.view.ticketIDError()
+            elif ticket == 0:
+                self.view.apiUnavailable()
             return False
 
 
