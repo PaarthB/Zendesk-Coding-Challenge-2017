@@ -59,7 +59,7 @@ class ModelTester(unittest.TestCase):
     # replace requests.get with my dummy function to simulate API network access.
     def test_api_get_one(self, test_get):  # mocking api interaction
         api = APIRequestHandler()
-        ticket = api.getTicketByID(2)
+        ticket = api.getTicket(2)
         self.assertEqual(len(ticket), 1)
         assert "ticket" in ticket
         self.assertEqual(ticket["ticket"]["id"], 2)
@@ -69,7 +69,7 @@ class ModelTester(unittest.TestCase):
     # replace requests.get with my dummy function to simulate API network access.
     def test_api_get_all(self, test_get):  # mocking api interaction
         api = APIRequestHandler()
-        ticket = api.getAllTickets()
+        ticket = api.getTickets()
         assert "tickets" in ticket
         assert "next_page" in ticket
         assert "previous_page" in ticket
@@ -93,14 +93,14 @@ class ModelTester(unittest.TestCase):
 
 
 class ViewTester(unittest.TestCase):
-    # Testing that basic functionality of view is working correctly
+    # Testing that basic functionality of view is working as expected
     def test_view(self):
         j1 = test_get_one_ticket()
         j2 = test_get_all_tickets()
         view = AppView()
         self.assertEqual(view.printMenu(), 0)
         self.assertEqual(view.inputError(), 1)
-        self.assertEqual(view.displaySingleTicket(j1.json_data), 0)
+        self.assertEqual(view.displayTicket(j1.json_data), 0)
         self.assertEqual(view.displayTickets(j2.json_data, 1), 1)
         self.assertEqual(view.startMessage(), 0)
         self.assertEqual(view.ticketIDError(), 1)
@@ -108,6 +108,7 @@ class ViewTester(unittest.TestCase):
         self.assertEqual(view.apiUnavailable(), 1)
         self.assertEqual(view.authenticationError(), 1)
         self.assertEqual(view.unknownError(), 1)
+        self.assertEqual(view.fetchTickets("all"), 0)
 
 
 class ControllerTester(unittest.TestCase):
@@ -138,11 +139,11 @@ class ControllerTester(unittest.TestCase):
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_one_ticket)
     def test_show_one(self, input, test_get):
         controller = AppController()
-        self.assertEqual(controller.showOneTicket(), 0)
+        self.assertEqual(controller.showTicket(), 0)
         self.assertEqual(controller.currID, 2)
-        self.assertEqual(controller.showOneTicket(), 0)
+        self.assertEqual(controller.showTicket(), 0)
         self.assertEqual(controller.currID, 3)
-        self.assertEqual(controller.showOneTicket(), 0)
+        self.assertEqual(controller.showTicket(), 0)
         self.assertEqual(controller.currID, 4)
 
     # Testing invalid ticket ID request response
@@ -150,7 +151,7 @@ class ControllerTester(unittest.TestCase):
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_bad_request_response)
     def test_invalid_ticket_id(self, input, test_get):
         controller = AppController()
-        self.assertEqual(controller.showOneTicket(), False)
+        self.assertEqual(controller.showTicket(), False)
 
 
 if __name__ == "__main__":
