@@ -83,7 +83,7 @@ class ModelTester(unittest.TestCase):
     def test_bad_request(self, test_get):
         api = APIRequestHandler()
         connection = api.connectToAPI()
-        self.assertEqual(connection, False)  # testing that api.connectToAPI returns False on bad request
+        self.assertEqual(connection, 1)  # testing that api.connectToAPI returns 1 on general bad request
 
     def test_date_formatting(self):  # test date is formatted correctly
         api = APIRequestHandler()
@@ -105,6 +105,9 @@ class ViewTester(unittest.TestCase):
         self.assertEqual(view.startMessage(), 0)
         self.assertEqual(view.ticketIDError(), 1)
         self.assertEqual(view.pageCommandError(), 1)
+        self.assertEqual(view.apiUnavailable(), 1)
+        self.assertEqual(view.authenticationError(), 1)
+        self.assertEqual(view.unknownError(), 1)
 
 
 class ControllerTester(unittest.TestCase):
