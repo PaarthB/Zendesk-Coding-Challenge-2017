@@ -80,7 +80,17 @@ python3 appController.py
 ```shell
 python appController.py
 ```
-
+You should see the following screen:
+```shell
+-------------------WELCOME TO ZENDESK TICKET VIEWER---------------------
+This application lets you view tickets and their details on your zendesk account
+Please enter a command, to view command options, type 'menu': menu
+Menu Options:
+1 : Display all tickets
+2 : Display Single ticket
+q : Quit program")
+Enter your choice: 
+```
 ## Application Testing:
 This app has automated tests within the file **testTicketViewer.py** inside **tests** folder, which are executed at once when the test file is run. For testing this app, go to the **"tests"** folder within the app on command line/terminal by using **cd** commands. Then type:<br /><br />
 **For Mac OS X 10.11 El Capitan & Ubuntu 16.04 LTS:**
@@ -101,4 +111,3 @@ python testTicketViewer.py -b
 - [x] Checking any irrelevant/redundant code and thorough error handling checking (Done)
 - [x] Making sure spaces and indents don't create errors (Done)
 - [x] Simple and easy to understand usage and setup instructions (Done)
-
