@@ -101,7 +101,7 @@ python3 testTicketViewer.py -b
 ```shell
 python testTicketViewer.py -b
 ```
-**NOTE:** **"-b"** is used for supressing output/print statements during unit testing.
+**NOTE:** **"-b"** is used for supressing output/print statements during unit testing.<br />
 You should see a message similar to the following on your CLI Screen:
 ```
 ............
