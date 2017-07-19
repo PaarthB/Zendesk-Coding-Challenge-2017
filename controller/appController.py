@@ -41,7 +41,7 @@ class AppController:
                 print("Quit")
                 self.view.quit()
             else:
-                self.view.inputError()
+                self.view.displayErrorMessage(4)
             self.input = ""
 
     def showTickets(self):  # Controller method to display all tickets. Handles user inputs for paging requests
@@ -53,11 +53,11 @@ class AppController:
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
             if tickets == -1:
-                self.view.unknownError()
+                self.view.displayErrorMessage(2)
             elif tickets == 1:
-                self.view.authenticationError()
+                self.view.displayErrorMessage(3)
             elif tickets == 0:
-                self.view.apiUnavailable()
+                self.view.displayErrorMessage(1)
             self.view.errorCode = None
             self.api.errorCode = None
             return None
@@ -78,7 +78,7 @@ class AppController:
                 page -= 1
                 page = self.view.displayTickets(tickets, page)
             else:
-                self.view.inputError()
+                self.view.displayErrorMessage(4)
             self.input = ""
             self.currPage = page
         return 0
@@ -98,11 +98,11 @@ class AppController:
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
             if ticket == 1:
-                self.view.authenticationError()
+                self.view.displayErrorMessage(3)
             elif ticket == -1:
-                self.view.ticketIDError()
+                self.view.displayErrorMessage(0)
             elif ticket == 0:
-                self.view.apiUnavailable()
+                self.view.displayErrorMessage(1)
             self.view.errorCode = None
             self.api.errorCode = None
             return False

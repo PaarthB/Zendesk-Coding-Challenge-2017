@@ -99,17 +99,19 @@ class ViewTester(unittest.TestCase):
         j1 = test_get_one_ticket()
         j2 = test_get_all_tickets()
         view = AppView()
-        self.assertEqual(view.printMenu(), 0)
-        self.assertEqual(view.inputError(), 1)
         self.assertEqual(view.displayTicket(j1.json_data), 0)
         self.assertEqual(view.displayTickets(j2.json_data, 1), 1)
         self.assertEqual(view.startMessage(), 0)
-        self.assertEqual(view.ticketIDError(), 1)
-        self.assertEqual(view.pageCommandError(), 1)
-        self.assertEqual(view.apiUnavailable(), 1)
-        self.assertEqual(view.authenticationError(), 1)
-        self.assertEqual(view.unknownError(), 1)
         self.assertEqual(view.fetchTickets("all"), 0)
+        self.assertEqual(view.printMenu(), 0)
+        '''
+        self.assertEqual(view.displayErrorMessage(0), 1)
+        self.assertEqual(view.displayErrorMessage(1), 1)
+        self.assertEqual(view.displayErrorMessage(2), 1)
+        self.assertEqual(view.displayErrorMessage(3), 1)
+        self.assertEqual(view.displayErrorMessage(4), 1)
+        self.assertEqual(view.displayErrorMessage(5), 1)
+        '''
 
 
 class ControllerTester(unittest.TestCase):
