@@ -103,7 +103,7 @@ python testTicketViewer.py -b
 ```
 **NOTE:** **"-b"** is used for supressing output/print statements during unit testing.
 
-
+<!--
 ## To improve:
 - [x] Test file class division (Done)
 - [x] comments, renaming of methods and code readability and unserstandability (Done)
@@ -111,3 +111,4 @@ python testTicketViewer.py -b
 - [x] Checking any irrelevant/redundant code and thorough error handling checking (Done)
 - [x] Making sure spaces and indents don't create errors (Done)
 - [x] Simple and easy to understand usage and setup instructions (Done)
+-->
