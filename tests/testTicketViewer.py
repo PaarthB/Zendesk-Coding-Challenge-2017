@@ -83,8 +83,8 @@ class ModelTester(unittest.TestCase):
         connection = api.connectToAPI()
         self.assertEqual(connection, 1)
         # testing that api.connectToAPI returns 1 on API unavailable or general bad request
-        self.assertEqual(api.getTickets(), 0)  # api.getTickets() returns 0, if api.connectToAPI() returns 1
-        self.assertEqual(api.getTicket('1'), 0)  # api.getTicket() returns 0, if api.connectToAPI() returns 1
+        self.assertEqual(api.getTickets(), 0)  # api.getTickets() returns 0, if api.connectToAPI() returns 1 (bad request)
+        self.assertEqual(api.getTicket('1'), 0)  # api.getTicket() returns 0, if api.connectToAPI() returns 1 (bad request)
 
     def test_date_formatting(self):  # test date is formatted correctly
         api = APIRequestHandler()
