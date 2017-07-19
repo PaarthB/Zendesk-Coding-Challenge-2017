@@ -11,8 +11,8 @@ class AppView:
         self.page_limit = 25
         self.errorCode = None
         self.badRequests = ["The ticket ID you gave is not a valid ID", "API unavailable. Please try again later",
-                            "Either no tickets on account or unknown error occurred",
-                            "API authentication not permitted or invalid user credentials."]
+                            "No tickets on account to display",
+                            "API authentication not permitted or invalid user credentials.", "Unknown Bad Request"]
         self.programErrors = ["Invalid input entered. Please enter input again: ",
                               "Page command error. 'd' to go down, 'u' to go up, 'menu' for menu and 'q' for quit: "]
 
@@ -23,12 +23,12 @@ class AppView:
         return 0
 
     def displayErrorMessage(self, messageID):  # Displays error messages on CLI screen based on error message ID
-        if messageID in [0, 1, 2, 3]:
+        if messageID in [0, 1, 2, 3, 4]:
             if self.errorCode is not None:
-                print("Bad request. Error getting data from API. Error Code: ", self.errorCode)
+                print("Bad request. Error getting data from API. Error Code:", self.errorCode)
             print(self.badRequests[int(messageID)])
-        elif messageID in [4, 5]:
-            print(self.programErrors[int(messageID) - 4], end="")
+        elif messageID in [5, 6]:
+            print(self.programErrors[int(messageID) - 5], end="")
         return 1
 
     def printMenu(self):  # Displays Command Menu on CLI Screen
