@@ -33,7 +33,7 @@ class AppController:
                 self.view.printMenu()
             elif self.input == '1':  # Show all tickets
                 response = self.showTickets()
-                if response is None: 
+                if response is None:
                     self.view.printMenu()
             elif self.input == '2':  # Show one ticket
                 self.showTicket()
@@ -42,14 +42,14 @@ class AppController:
                 print("Quit")
                 self.view.quit()
             else:
-                self.view.displayErrorMessage(4)  # Invalid user input for menu
+                self.view.displayErrorMessage(5)  # Invalid user input for menu
             self.input = ""
 
     def showTickets(self):  # Controller method to display all tickets. Handles user inputs for paging requests
         try:
             self.view.fetchTickets("all")  # Fetching display message
             tickets = self.api.getTickets()  # Get all tickets
-            assert tickets not in [-1, 0, 1]
+            assert tickets not in [-1, 0, 1, False]
             page = self.view.displayTickets(tickets, 1)
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
@@ -59,6 +59,8 @@ class AppController:
                 self.view.displayErrorMessage(3)
             elif tickets == 0:  # API unavailable
                 self.view.displayErrorMessage(1)
+            elif tickets is False:  # Other Bad Requests
+                self.view.displayErrorMessage(4)
             self.view.errorCode = None
             self.api.errorCode = None
             return None
@@ -77,7 +79,7 @@ class AppController:
                 page -= 1
                 page = self.view.displayTickets(tickets, page)
             else:
-                self.view.displayErrorMessage(5)  # Invalid user input for ticket paging
+                self.view.displayErrorMessage(6)  # Invalid user input for ticket paging
             self.input = ""
             self.currPage = page
         return 0
@@ -90,7 +92,7 @@ class AppController:
         try:
             self.view.fetchTickets(ticketID)  # Get ticket
             ticket = self.api.getTicket(ticketID)
-            assert ticket not in [-1, 0, 1]
+            assert ticket not in [-1, 0, 1, False]
             self.view.displayTicket(ticket)  # Display ticket
             self.currID = int(ticketID)  # Current ticket ID
             return 0
@@ -102,6 +104,8 @@ class AppController:
                 self.view.displayErrorMessage(0)
             elif ticket == 0:  # API unavailable
                 self.view.displayErrorMessage(1)
+            elif ticket is False:  # Other Bad Requests
+                self.view.displayErrorMessage(4)
             self.view.errorCode = None
             self.api.errorCode = None
             return False
