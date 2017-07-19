@@ -104,15 +104,14 @@ class ViewTester(unittest.TestCase):
         self.assertEqual(view.startMessage(), 0)
         self.assertEqual(view.fetchTickets("all"), 0)
         self.assertEqual(view.printMenu(), 0)
-        '''
+        
         self.assertEqual(view.displayErrorMessage(0), 1)
         self.assertEqual(view.displayErrorMessage(1), 1)
         self.assertEqual(view.displayErrorMessage(2), 1)
         self.assertEqual(view.displayErrorMessage(3), 1)
         self.assertEqual(view.displayErrorMessage(4), 1)
         self.assertEqual(view.displayErrorMessage(5), 1)
-        '''
-
+        
 
 class ControllerTester(unittest.TestCase):
     @patch("builtins.input", return_value='q')  # Simulate user quitting correctly to test quitting functionality
