@@ -63,7 +63,6 @@ class ModelTester(unittest.TestCase):
         self.assertEqual(len(ticket), 1)
         assert "ticket" in ticket
         self.assertEqual(ticket["ticket"]["id"], 2)
-        # check for code as well
 
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_all_tickets)
     # replace requests.get with my dummy function to simulate API network access.
@@ -76,14 +75,16 @@ class ModelTester(unittest.TestCase):
         assert "count" in ticket
         print("Ticket Length: ", len(ticket["tickets"]))
         self.assertEqual(len(ticket["tickets"]), 100)  # count = 101 in data.json, but actual length of json file = 100
-        # check for code as well
 
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_bad_request_response)
     # Test to get bad request from API, mocking the network access to simulate API call/request.
     def test_bad_request(self, test_get):
         api = APIRequestHandler()
         connection = api.connectToAPI()
-        self.assertEqual(connection, 1)  # testing that api.connectToAPI returns 1 on general bad request
+        self.assertEqual(connection, 1)
+        # testing that api.connectToAPI returns 1 on API unavailable or general bad request
+        self.assertEqual(api.getTickets(), 0)  # api.getTickets() returns 0, if api.connectToAPI() returns 1
+        self.assertEqual(api.getTicket('1'), 0)  # api.getTicket() returns 0, if api.connectToAPI() returns 1
 
     def test_date_formatting(self):  # test date is formatted correctly
         api = APIRequestHandler()
