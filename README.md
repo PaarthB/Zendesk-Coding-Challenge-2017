@@ -107,6 +107,8 @@ You should see a message similar to the following on your CLI Screen:
 ............
 ----------------------------------------------------------------------
 Ran 12 tests in 0.135s
+
+OK
 ```
 <!--
 ## To improve:
