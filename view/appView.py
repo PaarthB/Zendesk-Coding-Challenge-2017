@@ -64,7 +64,7 @@ class AppView:
     def authenticationError(self):
         if self.errorCode is not None:
             print("Bad request. Error getting data from API. Error Code: ", self.errorCode)
-        print("Authentication not permitted or invalid user credentials.")
+        print("API authentication not permitted or invalid user credentials.")
         return 1
 
     def apiUnavailable(self):
