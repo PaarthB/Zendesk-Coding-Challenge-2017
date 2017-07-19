@@ -102,7 +102,12 @@ python3 testTicketViewer.py -b
 python testTicketViewer.py -b
 ```
 **NOTE:** **"-b"** is used for supressing output/print statements during unit testing.
-
+You should see a message similar to the following on your CLI Screen:
+```
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.135s
+```
 <!--
 ## To improve:
 - [x] Test file class division (Done)
