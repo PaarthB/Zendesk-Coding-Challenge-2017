@@ -79,10 +79,8 @@ class AppView:
         totalPages = math.ceil(float(len(ticketsArr)) / float(self.page_limit))
 
         # circular rotation of pages after limit or before start
-        if (pageNo > totalPages):
-            pageNo = 1
-        elif (pageNo < 1):
-            pageNo = totalPages
+        if pageNo > totalPages: pageNo = 1
+        elif pageNo < 1: pageNo = totalPages
         pageTickets = 0
         ticketOffset = (pageNo - 1) * self.page_limit
         for i in range(int(ticketOffset), int(self.page_limit + ticketOffset)):
@@ -90,28 +88,18 @@ class AppView:
                 if ticketsArr[i]["id"] is None:
                     continue
                 else:
-                    self.printTicket(ticketsArr[i]["id"], ticketsArr[i]["status"], "",
-                                     ticketsArr[i]["requester_id"], ticketsArr[i]["updated_at"])
+                    print("<" + ticketsArr[i]["status"] + ">", "Ticket", ticketsArr[i]["id"], "opened by",
+                          ticketsArr[i]["requester_id"], "updated at", ticketsArr[i]["updated_at"])
                 pageTickets += 1
-
         print("Displaying", pageTickets, "tickets on page", pageNo, "of", totalPages)
         print("Enter 'd' for next page, 'u' for previous page, 'menu' for menu and q for quit")
         return pageNo  # Current page no
 
     def displayTicket(self, ticketsJSON):
         if "ticket" in ticketsJSON:
-            self.printTicket(ticketsJSON["ticket"]["id"], ticketsJSON["ticket"]["status"],
-                             ticketsJSON["ticket"]["subject"], ticketsJSON["ticket"]["requester_id"],
-                             ticketsJSON["ticket"]["updated_at"])
+            print("<" + ticketsJSON["ticket"]["status"] + ">", "Ticket", ticketsJSON["ticket"]["id"], "subject '",
+                  ticketsJSON["ticket"]["subject"], "opened by", ticketsJSON["ticket"]["requester_id"], "updated at",
+                  ticketsJSON["ticket"]["updated_at"])
             return 0
         else:
             return 1
-
-    def printTicket(self, ticketID, status, subject="", requesterID="", updatedAt=""):
-        if subject == "":
-            print("<" + status + ">", "Ticket", str(ticketID), "opened by", requesterID, "updated at", updatedAt)
-        else:
-            print("<" + status + ">", "Ticket", str(ticketID), "subject '" + subject + "'", "opened by", requesterID,
-                  "updated at", updatedAt)
-
-        return 0
