@@ -9,6 +9,7 @@ import math
 class AppView:
     def __init__(self):
         self.page_limit = 25
+        self.errorCode = None
 
     def startMessage(self):
         print("\n\n-------------------WELCOME TO ZENDESK TICKET VIEWER---------------------")
@@ -45,6 +46,8 @@ class AppView:
         return 1
 
     def ticketIDError(self):
+        if self.errorCode is not None:
+            print("Bad request. Error getting data from API. Error Code: ", self.errorCode)
         print("The ticket ID you gave is not a valid ID")
         return 1
 
@@ -53,14 +56,20 @@ class AppView:
         return 1
 
     def unknownError(self):
+        if self.errorCode is not None:
+            print("Bad request. Error getting data from API. Error Code: ", self.errorCode)
         print("Either no tickets on account or unknown error occurred")
         return 1
 
     def authenticationError(self):
+        if self.errorCode is not None:
+            print("Bad request. Error getting data from API. Error Code: ", self.errorCode)
         print("Authentication not permitted or invalid user credentials.")
         return 1
 
     def apiUnavailable(self):
+        if self.errorCode is not None:
+            print("Bad request. Error getting data from API. Error Code: ", self.errorCode)
         print("API unavailable. Please try again later")
         return 1
 

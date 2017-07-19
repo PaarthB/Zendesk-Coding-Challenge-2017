@@ -12,9 +12,10 @@ class APIRequestHandler:
     def __init__(self):
         self.URL = ""
         self.data = {}  # This is where ticket data goes
-        self.subdomain = "paarth"  # Zendesk API subdomain
+        self.subdomain = "parth"  # Zendesk API subdomain
         self.loginID = "paarthbhasin4@gmail.com"  # Zendesk API username
         self.password = "Adprs123!"  # Zendesk API password
+        self.errorCode = None
 
     # Method to get all tickets in user's account and return them or return an appropriate error value
     def getTickets(self):
@@ -23,7 +24,7 @@ class APIRequestHandler:
             if ticketsJSON is None:
                 return 1  # Invalid user credentials or authentication not enabled
             elif ticketsJSON == 1:
-                return 0  # If API is unavailable
+                return 0  # If API is unavailable or other bad request
             elif ticketsJSON is False or "tickets" not in ticketsJSON:
                 # For any other status code error or if no tickets exist
                 return -1
@@ -63,7 +64,8 @@ class APIRequestHandler:
         try:
             r = requests.get(self.URL, auth=(self.loginID, self.password))
             if r.status_code != 200:
-                print("Bad request. Error getting data from API. Error Code: ", r.status_code)
+                # print("Bad request. Error getting data from API. Error Code: ", r.status_code)
+                self.errorCode = r.status_code
                 if r.status_code == 401:
                     return None  # Authentication not allowed or invalid user credentials
                 elif r.status_code == 404:  # 404 = No tickets or invalid ticket ID

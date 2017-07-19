@@ -15,7 +15,7 @@ class AppController:
     def __init__(self):
         self.view = AppView()  # An AppView instance being used by this class
         self.api = APIRequestHandler()  # An APIRequestHandler instance being used by this class
-        self.input = "" # Input given by user
+        self.input = ""  # Input given by user
         self.currID = 999  # A random ticket ID. This points to the ticket we are currently viewing.
         self.currPage = 999  # A random page number. This points to the current page we are viewing.
 
@@ -51,12 +51,15 @@ class AppController:
             assert tickets not in [-1, 0, 1]
             page = self.view.displayTickets(tickets, 1)
         except AssertionError as e:
+            self.view.errorCode = self.api.errorCode
             if tickets == -1:
                 self.view.unknownError()
             elif tickets == 1:
                 self.view.authenticationError()
             elif tickets == 0:
                 self.view.apiUnavailable()
+            self.view.errorCode = None
+            self.api.errorCode = None
             return None
         while True:
             self.getInput()
@@ -93,12 +96,15 @@ class AppController:
             self.currID = int(ticketID)
             return 0
         except AssertionError as e:
+            self.view.errorCode = self.api.errorCode
             if ticket == 1:
                 self.view.authenticationError()
             elif ticket == -1:
                 self.view.ticketIDError()
             elif ticket == 0:
                 self.view.apiUnavailable()
+            self.view.errorCode = None
+            self.api.errorCode = None
             return False
 
 
