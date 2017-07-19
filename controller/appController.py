@@ -33,7 +33,8 @@ class AppController:
                 self.view.printMenu()
             elif self.input == '1':  # Show all tickets
                 response = self.showTickets()
-                if response is None: self.view.printMenu()
+                if response is None: 
+                    self.view.printMenu()
             elif self.input == '2':  # Show one ticket
                 self.showTicket()
                 self.view.printMenu()
