@@ -1,7 +1,8 @@
 """
 Model of the model package in MVC pattern. Does all the API stuff: authentication, fetching tickets, processing data got 
-from the API.
-It can be extended in the future to extra functionality like posting new data up on the server, token authentication.
+from the API, formatting dates.
+It can be extended in the future to add extra functionality like posting new data up on the server, token 
+authentication etc.
 """
 import requests
 import datetime
@@ -10,9 +11,13 @@ import datetime
 class APIRequestHandler:
     def __init__(self):
         self.URL = ""
-        self.data = {}
+        self.data = {}  # This is where ticket data goes
+        self.subdomain = "paarth"  # Zendesk API subdomain
+        self.loginID = "paarthbhasin4@gmail.com"  # Zendesk API username
+        self.password = "Adprs123!"  # Zendesk API password
 
-    def getAllTickets(self):
+    # Method to get all tickets in user's account and return them or return an appropriate error value
+    def getTickets(self):
         ticketsJSON = self.connectToAPI(True, "")
         if ticketsJSON in [1, False, None] or "tickets" not in ticketsJSON:
             if ticketsJSON is None:
@@ -31,7 +36,8 @@ class APIRequestHandler:
                 ticketsJSON["tickets"][i]["created_at"] = str(created)  # Setting the formatted dates
             return ticketsJSON
 
-    def getTicketByID(self, ticketID):
+    # Method to get one ticket details from API and return it, or return appropriate error value
+    def getTicket(self, ticketID):
         ticketsJSON = self.connectToAPI(False, ticketID)
         if ticketsJSON not in [None, False, 1] and "ticket" in ticketsJSON:
             updated, created = self.formatDates(ticketsJSON["ticket"]["updated_at"],
@@ -47,17 +53,15 @@ class APIRequestHandler:
             elif ticketsJSON is None:
                 return 1  # Invalid user credentials
 
+    # Method to connect and query the Zendesk API to fetch tickets
     def connectToAPI(self, all=True, id=""):
-        subdomain = "paarth"
-        loginID = "paarthbhasin4@gmail.com"
-        password = "Adprs123!"
 
         if all:
-            self.URL = "https://" + subdomain + ".zendesk.com/api/v2/tickets.json"
+            self.URL = "https://" + self.subdomain + ".zendesk.com/api/v2/tickets.json"
         else:
-            self.URL = "https://" + subdomain + ".zendesk.com/api/v2/tickets/" + str(id) + ".json"
+            self.URL = "https://" + self.subdomain + ".zendesk.com/api/v2/tickets/" + str(id) + ".json"
         try:
-            r = requests.get(self.URL, auth=(loginID, password))
+            r = requests.get(self.URL, auth=(self.loginID, self.password))
             if r.status_code != 200:
                 print("Bad request. Error getting data from API. Error Code: ", r.status_code)
                 if r.status_code == 401:
@@ -75,7 +79,7 @@ class APIRequestHandler:
             while all and new["next_page"] is not None and new["next_page"] not in next_page:
                 self.URL = new["next_page"]
                 next_page.append(self.URL)
-                r = requests.get(self.URL, auth=(loginID, password))
+                r = requests.get(self.URL, auth=(self.loginID, self.password))
                 new = r.json()
                 # print("Next: ", new["next_page"])
                 self.data["tickets"].extend(new["tickets"])  # Adding new tickets found in the next API web page.
@@ -86,6 +90,7 @@ class APIRequestHandler:
         except ConnectionError:
             return 1
 
+    # Method to convert date format of ticket into good print
     def formatDates(self, updatedAt, createdAt):
         t1 = datetime.datetime.strptime(updatedAt, "%Y-%m-%dT%H:%M:%SZ")
         t2 = datetime.datetime.strptime(createdAt, "%Y-%m-%dT%H:%M:%SZ")
