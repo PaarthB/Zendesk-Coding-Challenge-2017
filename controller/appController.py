@@ -28,80 +28,78 @@ class AppController:
     def showMainMenu(self):  # Main menu view controller
         self.view.startMessage()
         while True:
-            self.getInput()
-            if self.input == "menu":
+            self.getInput()  # Get user input
+            if self.input == "menu":  # Display app menu
                 self.view.printMenu()
-            elif self.input == '1':
+            elif self.input == '1':  # Show all tickets
                 response = self.showTickets()
                 if response is None: self.view.printMenu()
-            elif self.input == '2':
+            elif self.input == '2':  # Show one ticket
                 self.showTicket()
                 self.view.printMenu()
-            elif self.input == 'q':
+            elif self.input == 'q':  # Quit app
                 print("Quit")
                 self.view.quit()
             else:
-                self.view.displayErrorMessage(4)
+                self.view.displayErrorMessage(4)  # Invalid user input for menu
             self.input = ""
 
     def showTickets(self):  # Controller method to display all tickets. Handles user inputs for paging requests
         try:
-            self.view.fetchTickets("all")
-            tickets = self.api.getTickets()
+            self.view.fetchTickets("all")  # Fetching display message
+            tickets = self.api.getTickets()  # Get all tickets
             assert tickets not in [-1, 0, 1]
             page = self.view.displayTickets(tickets, 1)
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
-            if tickets == -1:
+            if tickets == -1:  # No tickets or unknown error
                 self.view.displayErrorMessage(2)
-            elif tickets == 1:
+            elif tickets == 1:  # Can't authenticate with API
                 self.view.displayErrorMessage(3)
-            elif tickets == 0:
+            elif tickets == 0:  # API unavailable
                 self.view.displayErrorMessage(1)
             self.view.errorCode = None
             self.api.errorCode = None
             return None
         while True:
             self.getInput()
-            if self.input == 'q':
+            if self.input == 'q':  # Quit app
                 self.view.quit()
                 break
-
-            elif self.input == "menu":
+            elif self.input == "menu":  # Show menu
                 self.view.printMenu()
                 break
-            elif self.input == "d":
+            elif self.input == "d":  # Page down
                 page += 1
                 page = self.view.displayTickets(tickets, page)
-
-            elif self.input == "u":
+            elif self.input == "u":  # Page up
                 page -= 1
                 page = self.view.displayTickets(tickets, page)
             else:
-                self.view.displayErrorMessage(4)
+                self.view.displayErrorMessage(5)  # Invalid user input for ticket paging
             self.input = ""
             self.currPage = page
         return 0
 
     def showTicket(self):  # Controller method for displaying one ticket in view
-        self.view.getTicketID()
-        self.getInput()
+        self.view.getTicketID()  # Display screen message
+        self.getInput()  # Get ticket ID
         ticketID = self.input
         self.input = ""
         try:
-            self.view.fetchTickets(ticketID)
+            self.view.fetchTickets(ticketID)  # Get ticket
             ticket = self.api.getTicket(ticketID)
             assert ticket not in [-1, 0, 1]
-            self.view.displayTicket(ticket)
-            self.currID = int(ticketID)
+            self.view.displayTicket(ticket)  # Display ticket
+            self.currID = int(ticketID)  # Current ticket ID
             return 0
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
-            if ticket == 1:
+            if ticket == 1:  # Can't authenticate with API
                 self.view.displayErrorMessage(3)
-            elif ticket == -1:
+            elif ticket == -1:  # Ticket ID not valid
                 self.view.displayErrorMessage(0)
-            elif ticket == 0:
+            elif ticket == 0:  # API unavailable
                 self.view.displayErrorMessage(1)
             self.view.errorCode = None
             self.api.errorCode = None
