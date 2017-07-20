@@ -36,7 +36,7 @@ class AppView:
         print("Enter 1 to display all tickets")
         print("Enter 2 to display single ticket")
         print("Enter q to exit application")
-        print("Enter menu to display Command Menu")
+        print("Enter 'menu' to display Command Menu")
         print("Enter your choice: ", end="")
         return 0
 
