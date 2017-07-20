@@ -18,7 +18,7 @@ For installing Python 3.6.0 on Mac, head to https://www.python.org/downloads/mac
 #### Windows 10:
 To install Python 3.6.0, head to https://www.python.org/downloads/release/python-360/ and download the file which says **"Windows x86-64 executable installer"**. After downloading, run the executable and chose **Add Python 3.6 to PATH** option. Then follow the instrcutions to get a full installation of Python 3.6.0 on your system.
 
-## Installation of Libraries/Modules used
+### Installation of Libraries/Modules used
 The libraries used are:
 
 - **sys** (For exiting, using application packages etc.)
