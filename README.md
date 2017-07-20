@@ -5,7 +5,7 @@ Zendesk 2017 Coding Challenge for Melbourne Internship<br /><br />
 
 ## Application Architecture/Design Explanation, MVC-Passive View:
 ![Image](/deps.gif?raw=true "MVC Patter Passive View")<br />
-Unlike most MVC-style configurations, Passive View results in no dependencies between view and model. As with these the UI is split between a view that handles display and a controller that responds to user gestures. The significant change with Passive View is that the view is made completely passive and is no longer responsible for updating itself from the model. As a result all of the view logic is in the controller. <br />For more info, read https://martinfowler.com/eaaDev/PassiveScreen.html.
+Unlike most MVC-style configurations, Passive View results in no dependencies between view and model. As with these the UI is split between a view that handles display and a controller that responds to user gestures. The significant change with Passive View is that the view is made completely passive and is no longer responsible for updating itself from the model. Controller handles responses to user events and does all the updating of the view.<br />For more info, read: https://martinfowler.com/eaaDev/PassiveScreen.html.
 
 ## Installation & Set-up
 This app has been written in Python 3.6.0. The following are the installation instructions of Python 3.6.0 on 64-bit: Windows 10 and Mac OS X 10.11 El Capitan. Each of these installations come with **pip**/**pip3** installation by default.
@@ -19,7 +19,7 @@ For installing Python 3.6.0 on Mac, head to https://www.python.org/downloads/mac
 To install Python 3.6.0, head to https://www.python.org/downloads/release/python-360/ and download the file which says **"Windows x86-64 executable installer"**. After downloading, run the executable and chose **Add Python 3.6 to PATH** option. Then follow the instrcutions to get a full installation of Python 3.6.0 on your system.
 
 ## Installation of Libraries/Modules used
-This app uses some standard libraries which should come by default with a complete installation of Python 3.6.0 as shown above. The libraries used are:
+The libraries used are:
 
 - **sys** (For exiting, using application packages etc.)
 - **requests** (for API access and response)
@@ -28,7 +28,7 @@ This app uses some standard libraries which should come by default with a comple
 - **datetime** (for formatting dates)
 - **math** (for rounding up page numbers)
 
-Out of these, **sys**, **json**, **math** and **unittest** are built-in and don't require separate installation (If you try installing, you should get an error).
+Out of these, **sys**, **json**, **math** and **unittest** are built-in in a standard Python 3.6.0 installation and don't require separate installation (If you try installing, you should get an error).
 For the the rest, they can be installed as follows on Mac OS X 10.11 and Windows 10:
 
 #### Mac OS X 10.11 El Capitan:
