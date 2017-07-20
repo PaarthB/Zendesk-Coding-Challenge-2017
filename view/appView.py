@@ -33,10 +33,10 @@ class AppView:
 
     def printMenu(self):  # Displays Command Menu on CLI Screen
         print("Command Options:")
-        print("Enter 1 - Display all tickets")
-        print("Enter 2 - Display single ticket")
-        print("Enter q - Exit application")
-        print("Enter menu - Display Command Menu")
+        print("Enter 1 to display all tickets")
+        print("Enter 2 to display single ticket")
+        print("Enter q to exit application")
+        print("Enter menu to display Command Menu")
         print("Enter your choice: ", end="")
         return 0
 
