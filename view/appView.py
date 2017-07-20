@@ -35,14 +35,14 @@ class AppView:
         print("Menu Options:")
         print("1 :", "Display all tickets")
         print("2 :", "Display Single ticket")
-        print("q :", "Quit program")
+        print("q :", "Exit application")
         print("Enter your choice: ", end="")
         return 0
 
     def quit(self):  # Displays quit message and quits the App
         print("Exiting Zendesk Ticket Viewer. . . . . .")
         print("Exiting successful, see you soon.")
-        sys.exit(0)
+        return 0
 
     def fetchTickets(self, ticketID):  # Displays loading tickets message on CLI screen
         if ticketID == "all":

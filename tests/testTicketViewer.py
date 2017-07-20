@@ -167,6 +167,7 @@ class ViewTester(unittest.TestCase):
         self.assertEqual(view.displayTicket(j1.json_data), 0)
         self.assertEqual(view.displayTickets(j2.json_data, 1), 1)
         self.assertEqual(view.startMessage(), 0)
+        self.assertEqual(view.quit(), 0)
         self.assertEqual(view.fetchTickets("all"), 0)
         self.assertEqual(view.printMenu(), 0)
 
