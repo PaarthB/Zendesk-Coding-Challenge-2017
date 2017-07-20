@@ -1,6 +1,6 @@
 """
 A Passive View in the view package for the MVC pattern. Its ticket data is what the controller passes to it. 
-It displays dynamic program messages & ticket information on the CLI screen.
+It displays static and dynamic: program messages & ticket information on the CLI screen.
 """
 import math
 
