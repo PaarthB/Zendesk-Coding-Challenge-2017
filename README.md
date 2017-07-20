@@ -32,6 +32,7 @@ Out of these, **sys**, **json**, **math** and **unittest** are built-in in a sta
 For the the rest, they can be installed as follows on Mac OS X 10.11 and Windows 10:
 
 #### Mac OS X 10.11 El Capitan:
+On terminal, type:
 ```shell
 pip3.6 install mock
 pip3.6 install datetime
