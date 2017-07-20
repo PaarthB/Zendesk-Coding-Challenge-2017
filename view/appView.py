@@ -27,9 +27,11 @@ class AppView:
             if self.errorCode is not None:
                 print("Bad request. Error getting data from API. Error Code:", self.errorCode)
             print(self.badRequests[int(messageID)])
+            return 1
         elif messageID in [5, 6]:
             print(self.programErrors[int(messageID) - 5], end="")
-        return 1
+            return 1
+        return -1
 
     def printMenu(self):  # Displays Command Menu on CLI Screen
         print("Command Options:")
@@ -53,8 +55,10 @@ class AppView:
         return 0
 
     def displayInputMessage(self, messageID):  # Displays input message on CLI screen based on messageID
-        print(self.inputMessages[messageID], end="")
-        return 0
+        if messageID in [0, 1]:
+            print(self.inputMessages[messageID], end="")
+            return 0
+        return -1
 
     def displayTickets(self, ticketsJSON, pageNo):  # Displays tickets details with pagination on CLI screen
         ticketsArr = ticketsJSON["tickets"]
