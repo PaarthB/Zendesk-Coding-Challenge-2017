@@ -12,7 +12,7 @@ class AppView:
         self.badRequests = ["The ticket ID you gave is not a valid ID", "API unavailable. Please try again later",
                             "No tickets on account to display",
                             "API authentication not permitted or invalid user credentials.", "Unknown Bad Request"]
-        self.programErrors = ["Invalid input entered. Please enter input again: ",
+        self.programErrors = ["Invalid input, please enter input again. To view command menu type 'menu': ",
                               "Page command error. 'd' to go down, 'u' to go up, 'menu' for menu and 'q' for quit: "]
 
     def startMessage(self):  # Displays Start message on CLI screen
@@ -31,10 +31,11 @@ class AppView:
         return 1
 
     def printMenu(self):  # Displays Command Menu on CLI Screen
-        print("Menu Options:")
+        print("Command Options:")
         print("1 :", "Display all tickets")
         print("2 :", "Display Single ticket")
         print("q :", "Exit application")
+        print("menu : Display command menu")
         print("Enter your choice: ", end="")
         return 0
 
@@ -82,6 +83,7 @@ class AppView:
             print("<" + ticketsJSON["ticket"]["status"] + ">", "Ticket", ticketsJSON["ticket"]["id"], "subject '",
                   ticketsJSON["ticket"]["subject"], "opened by", ticketsJSON["ticket"]["requester_id"], "updated at",
                   ticketsJSON["ticket"]["updated_at"])
+            print("Please enter a command, to view command menu, type 'menu': ", end="")
             return 0
         else:
             return 1
