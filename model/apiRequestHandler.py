@@ -67,18 +67,18 @@ class APIRequestHandler:
         else:
             self.URL = "https://" + self.subdomain + ".zendesk.com/api/v2/tickets/" + str(id) + ".json"
         try:
-            r = requests.get(self.URL, auth=(self.loginID, self.password))
-            if r.status_code != 200:
+            response = requests.get(self.URL, auth=(self.loginID, self.password))
+            if response.status_code != 200:
                 # print("Bad request. Error getting data from API. Error Code: ", r.status_code)
-                self.errorCode = r.status_code
-                if r.status_code == 401:
+                self.errorCode = response.status_code
+                if response.status_code == 401:
                     return None  # Authentication not allowed or invalid user credentials
-                elif r.status_code == 404:  # 404 = No tickets or invalid ticket ID
+                elif response.status_code == 404:  # 404 = No tickets or invalid ticket ID
                     return False
-                elif r.status_code == 503:  # API unavailable
+                elif response.status_code == 503:  # API unavailable
                     return 1
                 return 0  # For all other bad requests
-            self.data = r.json()  # Or json.loads(r.text) can also work
+            self.data = response.json()  # Or json.loads(r.text) can also work
             new = self.data
             next_page = []
             # Go through all web pages containing tickets and add them to tickets json. One page can contain 100 tickets
@@ -86,8 +86,8 @@ class APIRequestHandler:
             while all and new["next_page"] is not None and new["next_page"] not in next_page:
                 self.URL = new["next_page"]
                 next_page.append(self.URL)
-                r = requests.get(self.URL, auth=(self.loginID, self.password))
-                new = r.json()
+                response = requests.get(self.URL, auth=(self.loginID, self.password))
+                new = response.json()
                 # print("Next: ", new["next_page"])
                 self.data["tickets"].extend(new["tickets"])  # Adding new tickets found in the next API web page.
 
