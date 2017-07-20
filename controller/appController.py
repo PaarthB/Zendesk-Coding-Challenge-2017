@@ -37,7 +37,6 @@ class AppController:
                     self.view.printMenu()
             elif self.input == '2':  # Show one ticket
                 self.showTicket()
-                self.view.printMenu()
             elif self.input == 'q':  # Quit app
                 sys.exit(self.view.quit())  # Print quit message and quit
             else:
@@ -110,5 +109,5 @@ class AppController:
 
 
 if __name__ == "__main__":
-    t = AppController()  # Starting point of the application
-    t.run()
+    t = AppController()
+    t.run()  # Starting point of the application
