@@ -19,7 +19,7 @@ class APIRequestHandler:
 
     # Method to get all tickets in user's account and return them or return an appropriate error value
     def getTickets(self):
-        ticketsJSON = self.connectToAPI(True, "")
+        ticketsJSON = self.requestAPI(True, "")
         if ticketsJSON in [1, False, None, 0] or "tickets" not in ticketsJSON:
             if ticketsJSON is None:
                 return 1  # Invalid user credentials or authentication not enabled
@@ -41,7 +41,7 @@ class APIRequestHandler:
 
     # Method to get one ticket details from API and return it, or return appropriate error value
     def getTicket(self, ticketID):
-        ticketsJSON = self.connectToAPI(False, ticketID)
+        ticketsJSON = self.requestAPI(False, ticketID)
         if ticketsJSON not in [None, False, 1, 0] and "ticket" in ticketsJSON:
             updated, created = self.formatDates(ticketsJSON["ticket"]["updated_at"],
                                                 ticketsJSON["ticket"]["created_at"])
@@ -60,7 +60,7 @@ class APIRequestHandler:
             return False
 
     # Method to connect and query the Zendesk API to fetch tickets
-    def connectToAPI(self, all=True, id=""):
+    def requestAPI(self, all=True, id=""):
 
         if all:
             self.URL = "https://" + self.subdomain + ".zendesk.com/api/v2/tickets.json"

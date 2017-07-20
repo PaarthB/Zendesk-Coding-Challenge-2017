@@ -80,7 +80,7 @@ class ModelTester(unittest.TestCase):
     # replace requests.get with my dummy function to simulate API network access.
     def test_api_get_one(self, test_get):  # mocking api interaction
         api = APIRequestHandler()
-        ticket_raw = api.connectToAPI(False, 2)  # Raw ticket with unformatted dates
+        ticket_raw = api.requestAPI(False, 2)  # Raw ticket with unformatted dates
         self.assertEqual(len(ticket_raw), 1)
         assert "ticket" in ticket_raw
         self.assertEqual(ticket_raw["ticket"]["id"], 2)
@@ -94,7 +94,7 @@ class ModelTester(unittest.TestCase):
     # replace requests.get with my dummy function to simulate API network access.
     def test_api_get_all(self, test_get):  # mocking api interaction
         api = APIRequestHandler()
-        ticket_raw = api.connectToAPI(True)  # Raw tickets with unformatted dates
+        ticket_raw = api.requestAPI(True)  # Raw tickets with unformatted dates
         self.assertEqual(len(ticket_raw["tickets"]), 100)
         assert "tickets" in ticket_raw
         assert "next_page" in ticket_raw
@@ -118,8 +118,7 @@ class ModelTester(unittest.TestCase):
     # Test to get bad request from API, mocking the network access to simulate API call/request.
     def test_bad_request(self, test_get):
         api = APIRequestHandler()
-        connection = api.connectToAPI()
-        self.assertEqual(connection, 0)
+        self.assertEqual(api.requestAPI(), 0)
         # testing that api.connectToAPI returns 0 on general bad request
         self.assertEqual(api.getTickets(), False)
         # api.getTickets() returns 0, if api.connectToAPI() returns 0 (bad request)
@@ -129,8 +128,7 @@ class ModelTester(unittest.TestCase):
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_unauthorized_response)
     def test_unauthorized_request(self, test_get):
         api = APIRequestHandler()
-        connection = api.connectToAPI()
-        self.assertEqual(connection, None)
+        self.assertEqual(api.requestAPI(), None)
         # testing that api.connectToAPI returns None on 401 unauthorized request
         self.assertEqual(api.getTickets(), 1)
         # api.getTickets() returns 1, if api.connectToAPI() returns None (user not authorized)
@@ -140,8 +138,7 @@ class ModelTester(unittest.TestCase):
     @patch('model.apiRequestHandler.requests.get', side_effect=test_api_unavailable_response)
     def test_api_unavailable_request(self, test_get):
         api = APIRequestHandler()
-        connection = api.connectToAPI()
-        self.assertEqual(connection, 1)
+        self.assertEqual(api.requestAPI(), 1)
         # testing that api.connectToAPI returns 1 on API unavailable or general bad request
         self.assertEqual(api.getTickets(), 0)
         # Checking that api.getTickets() returns 0, if api.connectToAPI() returns 1 (API unavailable)
@@ -151,8 +148,7 @@ class ModelTester(unittest.TestCase):
     @patch('model.apiRequestHandler.requests.get', side_effect=test_invalid_ticket_id_response)
     def test_invalid_ticket_id_request(self, test_get):
         api = APIRequestHandler()
-        connection = api.connectToAPI()
-        self.assertEqual(connection, False)
+        self.assertEqual(api.requestAPI(), False)
         self.assertEqual(api.getTicket('abcd'), -1)  # Invalid ticket ID 'abcd', fetches a response of -1 from getTicket
 
 
