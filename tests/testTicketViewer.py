@@ -220,10 +220,10 @@ class ControllerTester(unittest.TestCase):
 
     # Testing invalid ticket ID request response
     @patch("builtins.input", side_effect=['199'])  # Ticket ID 199 doesn't exist. Testing that we get invalid response.
-    @patch('model.apiRequestHandler.requests.get', side_effect=test_get_bad_request_response)
+    @patch('model.apiRequestHandler.requests.get', side_effect=test_invalid_ticket_id_response)
     def test_invalid_ticket_id(self, input, test_get):
         controller = AppController()
-        self.assertEqual(controller.showTicket(), False)
+        self.assertEqual(controller.showTicket(), False)  # Invalid ticket ID gets False response from showTicket()
 
 
 if __name__ == "__main__":
