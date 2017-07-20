@@ -33,9 +33,9 @@ For the the rest, they can be installed as follows on Mac OS X 10.11 and Windows
 
 #### Mac OS X 10.11 El Capitan:
 ```shell
-pip3 install mock
-pip3 install datetime
-pip3 install requests
+pip3.6 install mock
+pip3.6 install datetime
+pip3.6 install requests
 ```
 #### Windows 10:
 On command line, type:
@@ -49,7 +49,7 @@ pip install requests
 To start using this app, download the git repository or the zip file. Open terminal/command line and go in the **controller** folder of this app through **cd** commands. Then type:<br /><br />
 **For Mac OS X 10.11 El Capitan:**
 ```shell
-python3 appController.py
+python3.6 appController.py
 ```
 **For Windows 10:**
 ```shell
@@ -71,7 +71,7 @@ Enter your choice: 1
 For testing this app, go to the **"tests"** folder within the app on command line/terminal by using **cd** commands. Then type:<br /><br />
 **For Mac OS X 10.11 El Capitan:**
 ```shell
-python3 testTicketViewer.py -b
+python3.6 testTicketViewer.py -b
 ```
 **For Windows 10:**
 ```shell
