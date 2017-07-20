@@ -61,10 +61,10 @@ You should see the following screen:
 This application lets you view tickets and their details on your zendesk account
 Please enter a command, to view command options, type 'menu': menu
 Command Options:
-Enter 1 - Display all tickets
-Enter 2 - Display single ticket
-Enter q - Exit application
-Enter menu - Display Command Menu
+Enter 1 to display all tickets
+Enter 2 to display single ticket
+Enter q to exit application
+Enter 'menu' to display Command Menu
 Enter your choice: 1
 ```
 ## Application Testing:
