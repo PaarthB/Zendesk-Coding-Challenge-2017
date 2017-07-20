@@ -39,8 +39,7 @@ class AppController:
                 self.showTicket()
                 self.view.printMenu()
             elif self.input == 'q':  # Quit app
-                self.view.quit()
-                sys.exit(0)
+                sys.exit(self.view.quit())  # Print quit message and quit
             else:
                 self.view.displayErrorMessage(5)  # Invalid user input for menu
             self.input = ""
@@ -67,8 +66,7 @@ class AppController:
         while True:
             self.getInput()
             if self.input == 'q':  # Quit app
-                self.view.quit()
-                sys.exit(0)
+                sys.exit(self.view.quit())  # Print quit message and quit
             elif self.input == "menu":  # Show menu
                 self.view.printMenu()
                 break

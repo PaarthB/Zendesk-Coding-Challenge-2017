@@ -2,7 +2,6 @@
 A static View in the view package for the MVC pattern. This view is controlled by the controller. 
 Displays program messages and ticket information on the CLI screen
 """
-import sys
 import math
 
 
