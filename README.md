@@ -11,14 +11,15 @@ Unlike most MVC-style configurations, Passive View results in no dependencies be
 This app has been written in Python 3.6.0. The following are the installation instructions of Python 3.6.0 on 64-bit: Windows 10 and Mac OS X 10.11 El Capitan. Each of these installations come with **pip**/**pip3** installation by default.
 
 ### Python 3.6.0 Installation:
-
+---
 #### Mac OS X 10.11 El Capitan:
 For installing Python 3.6.0 on Mac, head to https://www.python.org/downloads/mac-osx/ and under **"Python 3.6.0 - 2016-12-13"** click on **"Download Mac OS X 64-bit/32-bit installer"** and download the one suitable for your machine.
 
 #### Windows 10:
 To install Python 3.6.0, head to https://www.python.org/downloads/release/python-360/ and download the file which says **"Windows x86-64 executable installer"**. After downloading, run the executable and chose **Add Python 3.6 to PATH** option. Then follow the instrcutions to get a full installation of Python 3.6.0 on your system.
 
-### Installation of Libraries/Modules used
+### Installation of Libraries/Modules used:
+---
 The libraries used are:
 
 - **sys** (For exiting, using application packages etc.)
