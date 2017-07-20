@@ -12,8 +12,9 @@ class AppView:
         self.badRequests = ["The ticket ID you gave is not a valid ID", "API unavailable. Please try again later",
                             "No tickets on account to display",
                             "API authentication not permitted or invalid user credentials.", "Unknown Bad Request"]
-        self.programErrors = ["Invalid input, please enter input again. To view command menu type 'menu': ",
+        self.programErrors = ["Invalid input, please enter a valid command. To view command options type 'menu': ",
                               "Page command error. 'd' to go down, 'u' to go up, 'menu' for menu and 'q' for quit: "]
+        self.inputMessages = ["Enter the ticket ID: ", "Please enter a command, to view command menu, type 'menu': "]
 
     def startMessage(self):  # Displays Start message on CLI screen
         print("\n\n-------------------------WELCOME TO ZENDESK TICKET VIEWER-------------------------")
@@ -51,8 +52,8 @@ class AppView:
             print("Fetching ticket", ticketID + ",", "please wait . . . . .")
         return 0
 
-    def getTicketID(self):  # Displays input prompt message on CLI screen
-        print("Enter the ticket ID: ", end="")
+    def displayInputMessage(self, messageID):  # Displays input message on CLI screen based on messageID
+        print(self.inputMessages[messageID], end="")
         return 0
 
     def displayTickets(self, ticketsJSON, pageNo):  # Displays tickets details with pagination on CLI screen

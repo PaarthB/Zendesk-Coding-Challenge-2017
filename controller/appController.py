@@ -34,9 +34,11 @@ class AppController:
             elif self.input == '1':  # Show all tickets
                 response = self.showTickets()
                 if response is None:
-                    self.view.printMenu()
+                    self.view.displayInputMessage(1)  # Display input prompt message
             elif self.input == '2':  # Show one ticket
-                self.showTicket()
+                response = self.showTicket()
+                if response is False:
+                    self.view.displayInputMessage(1)  # Display input prompt message
             elif self.input == 'q':  # Quit app
                 sys.exit(self.view.quit())  # Print quit message and quit
             else:
@@ -82,7 +84,7 @@ class AppController:
         return 0
 
     def showTicket(self):  # Controller method for displaying one ticket in view
-        self.view.getTicketID()  # Display screen message
+        self.view.displayInputMessage(0)  # Display ticket ID input message
         self.getInput()  # Get ticket ID
         ticketID = self.input
         self.input = ""

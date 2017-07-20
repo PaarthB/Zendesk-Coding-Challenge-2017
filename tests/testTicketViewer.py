@@ -178,6 +178,8 @@ class ViewTester(unittest.TestCase):
         self.assertEqual(view.displayErrorMessage(4), 1)
         self.assertEqual(view.displayErrorMessage(5), 1)
         self.assertEqual(view.displayErrorMessage(6), 1)
+        self.assertEqual(view.displayInputMessage(0), 0)
+        self.assertEqual(view.displayInputMessage(1), 0)
 
 
 # Tests for appController.py module
