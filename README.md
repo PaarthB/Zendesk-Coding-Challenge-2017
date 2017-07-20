@@ -64,6 +64,7 @@ Command Options:
 Enter 1 - Display all tickets
 Enter 2 - Display single ticket
 Enter q - Exit application
+Enter menu - Display Command Menu
 Enter your choice: 1
 ```
 ## Application Testing:
@@ -91,6 +92,6 @@ OK
 - [x] comments, renaming of methods and code readability and unserstandability (Done)
 - [x] Readme instructions including usage, system requirements, dependencies, pictures etc. (Done)
 - [x] Checking any irrelevant/redundant code and thorough error handling checking (Done)
-- [x] Making sure spaces and indents don't create errors (Done)
+- [x] Making sure spaces and indents don't create errors (Done)M
 - [x] Simple and easy to understand usage and setup instructions (Done)
 -->
