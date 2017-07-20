@@ -24,11 +24,11 @@ class APIRequestHandler:
             if ticketsJSON is None:
                 return 1  # Invalid user credentials or authentication not enabled
             elif ticketsJSON == 1:
-                return 0  # If API is unavailable or other bad request
+                return 0  # If API is unavailable
             elif ticketsJSON == 0:
                 return False  # All other bad requests
             elif ticketsJSON is False or "tickets" not in ticketsJSON:
-                # For any other status code error or if no tickets exist
+                # For if no tickets exist
                 return -1
 
         elif ticketsJSON not in [1, False, None, 0] and "tickets" in ticketsJSON:

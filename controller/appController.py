@@ -34,15 +34,17 @@ class AppController:
             elif self.input == '1':  # Show all tickets
                 response = self.showTickets()
                 if response is None:
-                    self.view.displayInputMessage(1)  # Display input prompt message
+                    self.view.displayInputMessage("Enter the ticket ID: ", 0)  # Display input prompt message
             elif self.input == '2':  # Show one ticket
                 response = self.showTicket()
                 if response is False:
-                    self.view.displayInputMessage(1)  # Display input prompt message
+                    self.view.displayInputMessage("Enter the ticket ID: ", 0)  # Display input prompt message
             elif self.input == 'q':  # Quit app
                 sys.exit(self.view.quit())  # Print quit message and quit
             else:
-                self.view.displayErrorMessage(5)  # Invalid user input for menu
+                self.view.displayInputMessage(
+                    "Invalid input, please enter a valid command. To view command options type 'menu': ",
+                    1)  # Invalid user input for menu
             self.input = ""
 
     def showTickets(self):  # Controller method to display all tickets. Handles user inputs for paging requests
@@ -53,14 +55,14 @@ class AppController:
             page = self.view.displayTickets(tickets, 1)
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
-            if tickets == -1:  # No tickets or unknown error
-                self.view.displayErrorMessage(2)
+            if tickets == -1:  # No tickets on account
+                self.view.displayBadRequest("No tickets on account to display")
             elif tickets == 1:  # Can't authenticate with API
-                self.view.displayErrorMessage(3)
+                self.view.displayBadRequest("API authentication not permitted or invalid user credentials.")
             elif tickets == 0:  # API unavailable
-                self.view.displayErrorMessage(1)
+                self.view.displayBadRequest("API unavailable. Please try again later")
             elif tickets is False:  # Other Bad Requests
-                self.view.displayErrorMessage(4)
+                self.view.displayBadRequest("Unknown Bad Request")
             self.view.errorCode = None
             self.api.errorCode = None
             return None
@@ -78,13 +80,15 @@ class AppController:
                 page -= 1
                 page = self.view.displayTickets(tickets, page)
             else:
-                self.view.displayErrorMessage(6)  # Invalid user input for ticket paging
+                self.view.displayInputMessage(
+                    "Page command error. 'd' to go down, 'u' to go up, 'menu' for menu and 'q' for quit: ", 1)
+                # Invalid user input for ticket paging
             self.input = ""
             self.currPage = page
         return 0
 
     def showTicket(self):  # Controller method for displaying one ticket in view
-        self.view.displayInputMessage(0)  # Display ticket ID input message
+        self.view.displayInputMessage("Enter the ticket ID: ", 0)  # Display ticket ID input message
         self.getInput()  # Get ticket ID
         ticketID = self.input
         self.input = ""
@@ -98,13 +102,13 @@ class AppController:
         except AssertionError as e:
             self.view.errorCode = self.api.errorCode
             if ticket == 1:  # Can't authenticate with API
-                self.view.displayErrorMessage(3)
+                self.view.displayBadRequest("API authentication not permitted or invalid user credentials.")
             elif ticket == -1:  # Ticket ID not valid
-                self.view.displayErrorMessage(0)
+                self.view.displayBadRequest("The ticket ID you gave is not a valid ID")
             elif ticket == 0:  # API unavailable
-                self.view.displayErrorMessage(1)
+                self.view.displayBadRequest("API unavailable. Please try again later")
             elif ticket is False:  # Other Bad Requests
-                self.view.displayErrorMessage(4)
+                self.view.displayBadRequest("Unknown Bad Request")
             self.view.errorCode = None
             self.api.errorCode = None
             return False

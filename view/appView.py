@@ -1,6 +1,6 @@
 """
-A Passive View in the view package for the MVC pattern. Its ticket data is what the controller passes to it. 
-It displays static and dynamic: program messages & ticket information on the CLI screen.
+A static View in the view package for the MVC pattern. This view is controlled by the controller. 
+Displays program messages and ticket information on the CLI screen
 """
 import math
 
@@ -9,12 +9,6 @@ class AppView:
     def __init__(self):
         self.page_limit = 25
         self.errorCode = None
-        self.badRequests = ["The ticket ID you gave is not a valid ID", "API unavailable. Please try again later",
-                            "No tickets on account to display",
-                            "API authentication not permitted or invalid user credentials.", "Unknown Bad Request"]
-        self.programErrors = ["Invalid input, please enter a valid command. To view command options type 'menu': ",
-                              "Page command error. 'd' to go down, 'u' to go up, 'menu' for menu and 'q' for quit: "]
-        self.inputMessages = ["Enter the ticket ID: ", "Please enter a command, to view command menu, type 'menu': "]
 
     def startMessage(self):  # Displays Start message on CLI screen
         print("\n\n-------------------------WELCOME TO ZENDESK TICKET VIEWER-------------------------")
@@ -22,16 +16,15 @@ class AppView:
         print("Please enter a command, to view command options, type 'menu': ", end="")
         return 0
 
-    def displayErrorMessage(self, messageID):  # Displays error messages on CLI screen based on error message ID
-        if messageID in [0, 1, 2, 3, 4]:
-            if self.errorCode is not None:
-                print("Bad request. Error getting data from API. Error Code:", self.errorCode)
-            print(self.badRequests[int(messageID)])
-            return 1
-        elif messageID in [5, 6]:
-            print(self.programErrors[int(messageID) - 5], end="")
-            return 1
-        return -1
+    def displayBadRequest(self, message):  # Displays bad request message on CLI screen
+        if self.errorCode is not None:
+            print("Bad request. Error getting data from API. Error Code:", self.errorCode)
+        print(message)
+        return 1
+
+    def displayInputMessage(self, message, type):
+        print(message, end="")
+        return type  # Returns 0 on input prompt type messages, returns 1 on input error type messages
 
     def printMenu(self):  # Displays Command Menu on CLI Screen
         print("Command Options:")
@@ -53,12 +46,6 @@ class AppView:
         else:
             print("Fetching ticket", ticketID + ",", "please wait . . . . .")
         return 0
-
-    def displayInputMessage(self, messageID):  # Displays input message on CLI screen based on messageID
-        if messageID in [0, 1]:
-            print(self.inputMessages[messageID], end="")
-            return 0
-        return -1
 
     def displayTickets(self, ticketsJSON, pageNo):  # Displays tickets details with pagination on CLI screen
         ticketsArr = ticketsJSON["tickets"]

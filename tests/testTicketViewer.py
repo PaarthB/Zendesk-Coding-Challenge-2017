@@ -167,18 +167,6 @@ class ViewTester(unittest.TestCase):
         self.assertEqual(view.fetchTickets("all"), 0)
         self.assertEqual(view.printMenu(), 0)
 
-        self.assertEqual(view.displayErrorMessage(0), 1)
-        self.assertEqual(view.displayErrorMessage(1), 1)
-        self.assertEqual(view.displayErrorMessage(2), 1)
-        self.assertEqual(view.displayErrorMessage(3), 1)
-        self.assertEqual(view.displayErrorMessage(4), 1)
-        self.assertEqual(view.displayErrorMessage(5), 1)
-        self.assertEqual(view.displayErrorMessage(6), 1)
-        self.assertEqual(view.displayErrorMessage(7), -1)  # Wrong message ID
-        self.assertEqual(view.displayInputMessage(0), 0)
-        self.assertEqual(view.displayInputMessage(1), 0)
-        self.assertEqual(view.displayInputMessage(2), -1)  # Wrong message ID
-
 
 # Tests for appController.py module
 class ControllerTester(unittest.TestCase):
