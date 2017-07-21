@@ -12,7 +12,7 @@ This app has been written in Python 3.6.0. The following are the installation in
 
 ### Python 3.6.0 Installation:
 #### Mac OS X 10.11 El Capitan:
-For installing Python 3.6.0 on Mac, head to https://www.python.org/downloads/mac-osx/ and under **"Python 3.6.0 - 2016-12-13"** click on **"Download Mac OS X 64-bit/32-bit installer"** and download the one suitable for your machine.
+For installing Python 3.6.0 on Mac, head to https://www.python.org/downloads/mac-osx/ and under **"Python 3.6.0 - 2016-12-13"** click on **"Download Mac OS X 64-bit/32-bit installer"** and download the one suitable for your machine. Run the installer and follow the steps to get a full standard installation of Python 3.6.0 on your system.
 
 #### Windows 10:
 To install Python 3.6.0, head to https://www.python.org/downloads/release/python-360/ and download the file which says **"Windows x86-64 executable installer"**. After downloading, run the executable and chose **Add Python 3.6 to PATH** option. Then follow the instrcutions to get a full installation of Python 3.6.0 on your system.
