@@ -89,7 +89,7 @@ class ModelTester(unittest.TestCase):
         assert "ticket" in ticket
         self.assertEqual(ticket["ticket"]["id"], 2)
 
-    # Happy unit test to et all tickets from API
+    # Happy unit test to get all tickets from API
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_all_tickets)
     # replace requests.get with my dummy function to simulate API network access.
     def test_api_get_all(self, test_get):  # mocking api interaction, response status code = 200
