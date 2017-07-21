@@ -78,7 +78,7 @@ class ModelTester(unittest.TestCase):
     # Happy unit test
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_one_ticket)
     # replace requests.get with my dummy function to simulate API network access.
-    def test_api_get_one(self, test_get):  # mocking api interaction
+    def test_api_get_one(self, test_get):  # mocking api interaction, response status code = 200
         api = APIRequestHandler()
         ticket_raw = api.requestAPI(False, 2)  # Raw ticket with unformatted dates
         self.assertEqual(len(ticket_raw), 1)
@@ -92,7 +92,7 @@ class ModelTester(unittest.TestCase):
     # Happy unit test
     @patch('model.apiRequestHandler.requests.get', side_effect=test_get_all_tickets)
     # replace requests.get with my dummy function to simulate API network access.
-    def test_api_get_all(self, test_get):  # mocking api interaction
+    def test_api_get_all(self, test_get):  # mocking api interaction, response status code = 200
         api = APIRequestHandler()
         ticket_raw = api.requestAPI(True)  # Raw tickets with unformatted dates
         self.assertEqual(len(ticket_raw["tickets"]), 100)
@@ -119,7 +119,7 @@ class ModelTester(unittest.TestCase):
     def test_bad_request(self, test_get):
         api = APIRequestHandler()
         self.assertEqual(api.requestAPI(), 0)
-        # testing that api.requestAPI returns 0 on general bad request
+        # testing that api.requestAPI returns 0 on general bad request (response status code = 400 in this case)
         self.assertEqual(api.getTickets(), False)
         # api.getTickets() returns 0, if api.requestAPI() returns 0 (bad request)
         self.assertEqual(api.getTicket('1'), False)
@@ -139,14 +139,14 @@ class ModelTester(unittest.TestCase):
     def test_api_unavailable_request(self, test_get):
         api = APIRequestHandler()
         self.assertEqual(api.requestAPI(), 1)
-        # testing that api.requestAPI returns 1 on API unavailable
+        # testing that api.requestAPI returns 1 on 503 API unavailable response
         self.assertEqual(api.getTickets(), 0)
         # Checking that api.getTickets() returns 0, if api.requestAPI() returns 1 (API unavailable)
         self.assertEqual(api.getTicket('1'), 0)
         # Checking that api.getTicket() returns 0, if api.requestAPI() returns 1 (API unavailable)
 
     @patch('model.apiRequestHandler.requests.get', side_effect=test_invalid_ticket_id_response)
-    def test_invalid_ticket_id_request(self, test_get):
+    def test_invalid_ticket_id_request(self, test_get):  # 404 Invalid Ticket ID Response
         api = APIRequestHandler()
         self.assertEqual(api.requestAPI(), False)
         self.assertEqual(api.getTicket('abcd'), -1)  # Invalid ticket ID 'abcd', fetches a response of -1 from getTicket
