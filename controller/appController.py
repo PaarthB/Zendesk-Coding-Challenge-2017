@@ -13,7 +13,7 @@ from model.apiRequestHandler import APIRequestHandler
 
 class AppController:
     def __init__(self):
-        self.view = AppView()  # An AppView instance being used by this class
+        self.view = AppView()  # An AppView instance being used by this class.
         self.api = APIRequestHandler()  # An APIRequestHandler instance being used by this class
         self.input = ""  # Input given by user
         self.currID = 999  # A random ticket ID. This points to the ticket we are currently viewing.
