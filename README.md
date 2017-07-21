@@ -61,11 +61,13 @@ You should see the following screen:
 -------------------------WELCOME TO ZENDESK TICKET VIEWER-------------------------
 This application lets you view tickets and their details on your zendesk account
 Please enter a command, to view command options, type 'menu': menu
+
 Command Options:
 Enter 1 to display all tickets
 Enter 2 to display single ticket
 Enter q to exit application
 Enter 'menu' to display Command Menu
+
 Enter your choice: 1
 ```
 Use 'u' and 'd' (up and down) to page through tickets when viewing all tickets. Enter ticket ID after entering '2' to view specific ticket. The rest of the controls are as shown in the demo above (q to quit and 'menu' to display command menu).
