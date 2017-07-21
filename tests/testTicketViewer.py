@@ -119,7 +119,7 @@ class ModelTester(unittest.TestCase):
     def test_bad_request(self, test_get):
         api = APIRequestHandler()
         self.assertEqual(api.requestAPI(), 0)
-        # testing that api.connectToAPI returns 0 on general bad request
+        # testing that api.requestAPI returns 0 on general bad request
         self.assertEqual(api.getTickets(), False)
         # api.getTickets() returns 0, if api.requestAPI() returns 0 (bad request)
         self.assertEqual(api.getTicket('1'), False)
@@ -129,7 +129,7 @@ class ModelTester(unittest.TestCase):
     def test_unauthorized_request(self, test_get):
         api = APIRequestHandler()
         self.assertEqual(api.requestAPI(), None)
-        # testing that api.connectToAPI returns None on 401 unauthorized request
+        # testing that api.requestAPI returns None on 401 unauthorized request
         self.assertEqual(api.getTickets(), 1)
         # api.getTickets() returns 1, if api.requestAPI() returns None (user not authorized)
         self.assertEqual(api.getTicket('1'), 1)
@@ -139,7 +139,7 @@ class ModelTester(unittest.TestCase):
     def test_api_unavailable_request(self, test_get):
         api = APIRequestHandler()
         self.assertEqual(api.requestAPI(), 1)
-        # testing that api.connectToAPI returns 1 on API unavailable
+        # testing that api.requestAPI returns 1 on API unavailable
         self.assertEqual(api.getTickets(), 0)
         # Checking that api.getTickets() returns 0, if api.requestAPI() returns 1 (API unavailable)
         self.assertEqual(api.getTicket('1'), 0)

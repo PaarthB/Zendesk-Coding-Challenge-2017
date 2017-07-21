@@ -34,11 +34,13 @@ class AppController:
             elif self.input == '1':  # Show all tickets
                 response = self.showTickets()
                 if response is None:
-                    self.view.displayInputMessage("Enter the ticket ID: ", 0)  # Display input prompt message
+                    self.view.displayInputMessage("Enter a command, to view command menu, type 'menu': ", 0)
+                    # Display input prompt message
             elif self.input == '2':  # Show one ticket
                 response = self.showTicket()
                 if response is False:
-                    self.view.displayInputMessage("Enter the ticket ID: ", 0)  # Display input prompt message
+                    self.view.displayInputMessage("Enter a command, to view command menu, type 'menu': ", 0)
+                    # Display input prompt message
             elif self.input == 'q':  # Quit app
                 sys.exit(self.view.quit())  # Print quit message and quit
             else:
