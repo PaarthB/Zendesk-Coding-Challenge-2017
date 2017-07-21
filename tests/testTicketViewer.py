@@ -30,7 +30,7 @@ class MockResponse:
 
 # noinspection PyTypeChecker
 def test_get_one_ticket(url="", auth=""):
-    f2 = open('data (1).json', 'r')  # Sample json ticket data for one ticket
+    f2 = open('data (1).json', 'r')  # Sample json ticket data for one ticket.
     j2 = json.load(f2)
     f2.close()
     mockObject = MockResponse(j2, 200)
