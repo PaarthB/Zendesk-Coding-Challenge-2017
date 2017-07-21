@@ -1,6 +1,6 @@
 # Zendesk-Coding-Challenge-2017 :shipit:
 
-Zendesk 2017 Coding Challenge for Melbourne Internship<br /><br />
+Zendesk 2017 Coding Challenge for Melbourne Internship. CLI App to view tickets on your Zendesk Account.<br /><br />
 **NOTE**: This app has been tested to work on 64-bit: **Windows 10** and **Mac OS X 10.11 El Capitan**. It is recommended to run this app on one of these OS, since any other OS would mean you'd have to find out its own installation and usage instructions, which would be time consuming and would need trial-error.
 
 ## Application Architecture/Design Explanation, MVC-Passive View:
