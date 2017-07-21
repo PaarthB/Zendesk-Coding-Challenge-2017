@@ -72,8 +72,8 @@ class AppView:
 
     def displayTicket(self, ticketsJSON):  # Displays one ticket details on CLI screen
         if "ticket" in ticketsJSON:
-            print("<" + ticketsJSON["ticket"]["status"] + ">", "Ticket", ticketsJSON["ticket"]["id"], "subject '",
-                  ticketsJSON["ticket"]["subject"], "opened by", ticketsJSON["ticket"]["requester_id"], "updated at",
+            print("<" + ticketsJSON["ticket"]["status"] + ">", "Ticket", ticketsJSON["ticket"]["id"], "subject", "'" +
+                  ticketsJSON["ticket"]["subject"] + "'", "opened by", ticketsJSON["ticket"]["requester_id"], "updated at",
                   ticketsJSON["ticket"]["updated_at"])
             print("Please enter a command, to view command menu, type 'menu': ", end="")
             return 0
