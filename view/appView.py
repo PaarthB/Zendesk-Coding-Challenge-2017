@@ -35,7 +35,7 @@ class AppView:
         print("Enter your choice: ", end="")
         return 0
 
-    def quit(self):  # Displays quit message and quits the App
+    def quit(self):  # Displays quit message and quits the App.
         print("Exiting Zendesk Ticket Viewer. . . . . .")
         print("Exiting successful, see you soon.")
         return 0
