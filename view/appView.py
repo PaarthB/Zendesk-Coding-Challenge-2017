@@ -18,7 +18,7 @@ class AppView:
 
     def displayBadRequest(self, message):  # Displays bad request message on CLI screen
         if self.errorCode is not None:
-            print("Bad request. Error getting data from API. Error Code:", self.errorCode)
+            print("\nBad request. Error getting data from API. Error Code:", self.errorCode)
         print(message)
         return 1
 
