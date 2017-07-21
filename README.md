@@ -68,6 +68,7 @@ Enter q to exit application
 Enter 'menu' to display Command Menu
 Enter your choice: 1
 ```
+Use 'u' and 'd' (up and down) to page through tickets when viewing all tickets. Enter ticket ID after entering '2' to view specific ticket. The rest of the controls are as shown in th demo above.(q to quit and 'menu' to display command menu)
 ## Application Testing:
 For testing this app, go to the **"tests"** folder within the app on command line/terminal by using **cd** commands. Then type:<br /><br />
 **For Mac OS X 10.11 El Capitan:**
